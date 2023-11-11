@@ -1,1 +1,19 @@
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+.aside{
+    border: solid 1px black;
+}
+.main{
+    margin-top: 1em;
+    border: 1px rgb(62, 47, 47) solid;
+}
+
+.productos{
+    padding: 0.5em;
+    display: grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap: 0.5em;
+}
+
+.producto{
+    border: red solid 1px;
+}

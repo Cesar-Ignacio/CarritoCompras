@@ -1,5 +1,4 @@
 
-
 /**CLASS */
 class Usuario{
     constructor(dni,nombreUsuario,contrasenia,estado)
