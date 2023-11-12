@@ -1,60 +1,31 @@
 
-/**CLASS */
-class Usuario{
-    constructor(dni,nombreUsuario,contrasenia,estado)
-    {
-        this.dni=dni;
-        this.nombreUsuario=nombreUsuario;
-        this.contrasenia=contrasenia;
-        this.estado=estado;
-    }
-}
+let btnLogin=document.querySelector("#btnLogin")
 
-/**ARRAYS */
-let listaUsuarios=[
-    new Usuario(14523698,"admin","111",true),
-    new Usuario(54789632,"Juan","juan1",true),
-    new Usuario(12458796,"Cesar","cesar123",true)
-];
+/**Recuperamos los usuarios registrados */
+let listaUsuarios=JSON.parse(localStorage.getItem("Usuarios"));
 
-/**VARIABLES GLOBALES */
-let btnLogin=document.querySelector("form button")
-let usuarioLogeado;
-/** INICIO */
-cargarUsuarios();
+let pMensaje=document.querySelector("main .mensajeError");
 
 /**EVENTOS */
 btnLogin.addEventListener("click",(e)=>{
     e.preventDefault();
+
     let nombreUsuario=document.querySelector("#nombreUsuario").value;
     let contraseniaUsuario=document.querySelector("#contraseniaUsuaria").value;
-    let pMensaje=document.querySelector(".mensaje");
+
+    let usuario=listaUsuarios.find((usu)=>usu._contrasenia===contraseniaUsuario && usu._nombreUsuario===nombreUsuario);
     
-    /**Obtenemos el array de usuario del STORAGE */
-    listaUsuarios=JSON.parse(localStorage.getItem("usuarios")); 
-
-    let estado=listaUsuarios.some((ele)=>ele.nombreUsuario===nombreUsuario && ele.contrasenia===contraseniaUsuario);
-
-    if(estado)
+    if(usuario!==undefined)
     {
-        /**EL USUARIO EXISTE */
-        usuarioLogeado=listaUsuarios.find((ele)=>ele.nombreUsuario===nombreUsuario && ele.contrasenia===contraseniaUsuario);
-        localStorage.setItem("usuarioLogeado",JSON.stringify(usuarioLogeado));
-        window.location="catalogo.html";
-        
+        localStorage.setItem("usuarioLogeado",JSON.stringify(usuario));
+        window.location.href = "../index.html";
     }
     else{
-        pMensaje.innerText="No se encontro el usario";
+        pMensaje.innerHTML="El usuario no existe";
     }
-
-
+    
 });
 
 /**FUNCIONES */
 
-function cargarUsuarios()
-{
-    /**CARGA DE USUARIOS AL LOCALSTORAGE */
-    localStorage.setItem("usuarios",JSON.stringify(listaUsuarios));
-}
 

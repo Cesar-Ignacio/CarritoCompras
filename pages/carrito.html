@@ -1,12 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito</title>
     <link rel="stylesheet" href="/CSS/style.css">
 </head>
+
 <body>
-    <h1>Carrito</h1>
+    <header class="header">
+        <div class="logito">
+            <h1>Buy Funny</h1>
+        </div>
+        <nav class="nav">
+            <ul>
+                <li><input type="text" id="nombreProducto" placeholder="Buscar Producto"></li>
+                <li><label for="categoriaProducto">
+                        Filtrar por categoria
+                        <select name="" id="categoriaProducto">
+                            <option value="todos">Todos</option>
+                            <option value="Parlentes">Parlantes</option>
+                            <option value="Celulares">Celulares</option>
+                            <option value="Auriculares">Auriculares</option>
+                        </select>
+                    </label>
+                </li>
+                <li><a href="/pages/carrito.html" target="_blank">Carrito</a></li>
+
+            </ul>
+        </nav>
+    </header>
+    <aside class="aside">
+        <div class="imgUsurio">
+            <img src="" alt="imgUsurio">
+        </div>
+        <div class="informacionUsuario">
+            <strong id="nombreUsuario">Nombre Usuario</strong>
+            <br>
+            <strong id="idUsuario">ID</strong>
+            <br>
+            <strong id="maiUsuario">Mail</strong>
+            <br>
+        </div>
+        <a href="#" id="cerrSes">cerrar sesion</a>
+    </aside>
+    <main class="main">
+        <h1>Carrito</h1>
+        <div class="detalleCarrito">
+            <strong>Total: $00</strong>
+            <br>
+            <strong>Cantidad Productos: 0</strong>
+            <br>
+            <button class="vaciarCarrito">VACIAR CARRITO</button>
+            <button class="finalizarCompra">FINALIZAR COMPRAR</button>
+        </div>
+        <section class="productosComprados">
+           
+        </section>
+    </main>
+    
+    <script src="../js/carrito.js"></script>
 </body>
 </html>
