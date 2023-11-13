@@ -44,14 +44,13 @@ let usuarioLogeado;
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    //cargarUsuarios();
     cargarPerfil();
-    verificarProductos();
+    cargarProductos();
     verificarCarrito();
-
+    renderizarProductos(listaProductos);
 });
 
-renderizarProductos(listaProductos);
+
 
 /** FUNCIONES */
 function agregerProCarrito(producto) {
@@ -113,17 +112,10 @@ function renderizarProductos(productos) {
     });
 }
 
-function verificarProductos() {
-    if (localStorage.getItem("Productos") === null) {
-        /**Si no existe se crea */
-        localStorage.setItem("Productos", JSON.stringify(listaProductos));
-        console.log("se creo valor Productos en el LocalStorage");
-    }
-    else {
-        /**Si existe, actualizamos el array*/
-        listaProductos = JSON.parse(localStorage.getItem("Productos"));
-        console.log("se actualizo el array (listaProductos)")
-    }
+function cargarProductos() {
+    /**Si no existe el valor Productos en el Local Storage lo creamos, caso contrario actualizamos la viable local*/
+    let listaProLs=JSON.parse(localStorage.getItem("Productos")) ?? localStorage.setItem("Productos",JSON.stringify(listaProductos));
+    listaProLs===undefined ?console.log("ADD Productos LocalStorage"):listaProductos=listaProLs;console.log("Productos Actualizados del LocalStorage");
 }
 
 function verificarCarrito() {
@@ -175,6 +167,7 @@ function vistaUsuarioNoLogeado() {
 
     console.log("Ningun usuario logeado");
 }
+
 function vistaUsuarioLogeado() {
 
     /** Si mostrará el elemento aside con los datos del usuario logeado*/
