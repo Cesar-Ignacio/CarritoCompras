@@ -15,17 +15,25 @@ document.addEventListener("DOMContentLoaded",()=>{
 function cargarProductoDeUsuario()
 {   
     /**
-     * Se crea un arrya con los productos del usaurio logeado
+     * Se crea un arrya con los productos del usaurio logeado.
+     * 
      */
+
+    let cantidadPro=document.querySelector("#cantidadProductos");
+
+    let totalFinal=document.querySelector("#total");
+
     productUsu=listaProductoCarrito.filter((ele)=>ele._idUsuario===(usuarioLogeado?._id?? -1))
     
-    let cantidadPro=document.querySelector("#cantidadProductos");
-    
-    cantidadPro.innerText=productUsu.reduce((acc,ele)=>{
-        acc+=parseInt(ele._cantidad);
+    let {total,cantidad}=productUsu.reduce((acc,ele)=>{
+      (acc["total"])?acc["total"]+=ele._total:acc["total"]=ele._total; 
+      (acc["cantidad"])?acc["cantidad"]+=parseInt(ele._cantidad):acc["cantidad"]=parseInt(ele._cantidad);
         return acc;
-    },0)
-    
+    },{});
+
+    cantidadPro.innerText=cantidad?? 0;
+    totalFinal.innerText=total??0;
+
     renderizarProductosCarrito(productUsu);
 }   
 
@@ -47,7 +55,8 @@ function renderizarProductosCarrito(productos)
         let divInfoPro=document.createElement("div");
         divInfoPro.classList.add("infoProCarrito");
         divInfoPro.innerHTML=`<strong>${element._nombreProducto}</strong>
-                              <strong>$${element._precio}</strong> `;
+                              <strong>Precio Unidad $${element._precioUnidad}</strong> 
+                              <strong>Total $${element._total}</strong>`;
         let inputCantiPro=document.createElement("input");
         inputCantiPro.setAttribute("type","number")
         inputCantiPro.setAttribute("value",`${element._cantidad}`);
@@ -121,12 +130,12 @@ function vistaUsuarioLogeado() {
 function cambiarCantidadProducto(idProducto,nuevoCantidad)
 {
     /**
-     * Se creo un nuevo arrya con la cantida modificada del producto, luego se modifica el valor en el local 
+     * Se creo un nuevo arrya con la cantida, total modificada del producto, luego se modifica el valor en el local 
      * Storage y por ultimo se cargar los productos nuevamente.
      */
 
     let nuevoLista=productUsu.map((ele)=>{
-        ele._id===idProducto ? ele._cantidad=nuevoCantidad:"con";
+        ele._id===idProducto&&(ele._cantidad=nuevoCantidad, ele._total=ele._precioUnidad*nuevoCantidad);
         return ele;
     });
     localStorage.setItem("Carrito",JSON.stringify(nuevoLista));

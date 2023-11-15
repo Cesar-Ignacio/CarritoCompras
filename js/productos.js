@@ -17,7 +17,8 @@ class Carrito {
         this._nombreProducto = nombreProducto;
         this._descripcion = descripcion;
         this._cantidad = cantidad;
-        this._precio = precio;
+        this._precioUnidad = precio;
+        this._total=precio;
         this._estado = true;
     }
 }
@@ -55,20 +56,21 @@ function agregerProCarrito(producto) {
     /**
      * Si no existe un usuario se mostrar una leyenda, caso contrario se agregara un nuevo producto al array "listaProductoCarrito"
      * (un objeto carrito) y luego se actualizará en el localStorage
-     */
+     */    
     (usuarioLogeado === undefined) ? Swal.fire({
         text: "No puede agregar productos al carrito si no esta logeado",
         title: "No existe usuario",
         icon: "error"
-    }) : listaProductoCarrito.push(new Carrito(usuarioLogeado._id, producto._id, producto._nombreProducto, producto._descripcion, 1, producto._precio))
-    localStorage.setItem("Carrito", JSON.stringify(listaProductoCarrito));
+    }):(listaProductoCarrito.push(new Carrito(usuarioLogeado._id, producto._id, producto._nombreProducto, producto._descripcion, 1, producto._precio)), 
+    localStorage.setItem("Carrito", JSON.stringify(listaProductoCarrito)),
     Swal.fire({
         position: "top-end",
         icon: "success",
         title: "Se agrego el producto al carrito",
         showConfirmButton: false,
         timer: 1500
-    });
+    }))
+   
 }
 
 function renderizarProductos(productos) {
