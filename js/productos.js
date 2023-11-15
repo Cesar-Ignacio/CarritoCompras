@@ -51,12 +51,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /** FUNCIONES */
-function agregerProCarrito(producto) { 
+function agregerProCarrito(producto) {
     /**
      * Si no existe un usuario se mostrar una leyenda, caso contrario se agregara un nuevo producto al array "listaProductoCarrito"
      * (un objeto carrito) y luego se actualizará en el localStorage
      */
-  
     (usuarioLogeado === undefined) ? Swal.fire({
         text: "No puede agregar productos al carrito si no esta logeado",
         title: "No existe usuario",
@@ -145,20 +144,19 @@ function vistaUsuarioNoLogeado() {
     aside.setAttribute("style", "display:none");
 
     let ul = document.querySelector(".header .nav ul");
-    let li = document.createElement("li");
-    let a = document.createElement("a");
+    let liLogin = document.createElement("li");
+    let aLogin = document.createElement("a");
     let liRegistrar = document.createElement("li");
     let aRegistrar = document.createElement("a");
 
-    a.setAttribute("href", "/pages/login.html");
-    //a.setAttribute("target", "_black");
-    a.innerText = "Login";
+    aLogin.setAttribute("href", "/pages/login.html");
+    aLogin.innerText = "Login";
     aRegistrar.setAttribute("href", "/pages/registrar.html");
-    aRegistrar.setAttribute("target", "_black");
     aRegistrar.innerText = "Registrar"
-    li.append(a);
+
+    liLogin.append(aLogin);
     liRegistrar.append(aRegistrar);
-    ul.append(li, liRegistrar);
+    ul.append(liLogin, liRegistrar);
 
     console.log("Ningun usuario logeado");
 }
@@ -166,14 +164,10 @@ function vistaUsuarioNoLogeado() {
 function vistaUsuarioLogeado() {
 
     /** Si mostrará el elemento aside con los datos del usuario logeado*/
-    let nomUs = document.querySelector("#nombreUsuario");
-    let idUs = document.querySelector("#idUsuario");
-    let mailUs = document.querySelector("#maiUsuario");
-
-    nomUs.innerHTML = usuarioLogeado._nombreUsuario;
-    idUs.innerHTML = usuarioLogeado._id;
-    mailUs.innerHTML = usuarioLogeado._mai;
-
+    let divInfoUsu = document.querySelector(".informacionUsuario ul")
+    divInfoUsu.innerHTML = `<li>${usuarioLogeado._id}</li>
+                            <li>${usuarioLogeado._nombreUsuario}</li>
+                            <li>${usuarioLogeado._mai}</li>`;
     console.log(`Usuario logeado ${usuarioLogeado._nombreUsuario}`);
 }
 

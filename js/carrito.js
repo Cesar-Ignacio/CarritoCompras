@@ -3,19 +3,37 @@
 let listaProductoCarrito=JSON.parse(localStorage.getItem("Carrito"));
 let aCerrarSess=document.querySelector("#cerrSes");
 let usuarioLogeado;
+let productUsu;
 
-verificarUsuario();
-
-renderizarProductosCarrito(listaProductoCarrito);
+document.addEventListener("DOMContentLoaded",()=>{
+    cargarPerfil();
+    cargarProductoDeUsuario();
+});
 
 /**FUNCIONES */
+
+function cargarProductoDeUsuario()
+{   
+    /**
+     * Se crea un arrya con los productos del usaurio logeado
+     */
+    productUsu=listaProductoCarrito.filter((ele)=>ele._idUsuario===(usuarioLogeado?._id?? -1))
+    
+    let cantidadPro=document.querySelector("#cantidadProductos");
+    
+    cantidadPro.innerText=productUsu.reduce((acc,ele)=>{
+        acc+=parseInt(ele._cantidad);
+        return acc;
+    },0)
+    
+    renderizarProductosCarrito(productUsu);
+}   
+
 function renderizarProductosCarrito(productos)
 {
     let secProductosCarrito=document.querySelector(".productosComprados");
-
-    let productoDeUsuario=productos.filter((ele)=>ele._idUsuario===usuarioLogeado._id)
-    
-    productoDeUsuario.forEach(element => {
+    secProductosCarrito.innerHTML=" ";
+    productos.forEach(element => {
 
         let divPro=document.createElement("div");
         divPro.classList.add("productoCarrito");
@@ -32,7 +50,11 @@ function renderizarProductosCarrito(productos)
                               <strong>$${element._precio}</strong> `;
         let inputCantiPro=document.createElement("input");
         inputCantiPro.setAttribute("type","number")
-        inputCantiPro.setAttribute("value","1");
+        inputCantiPro.setAttribute("value",`${element._cantidad}`);
+
+        inputCantiPro.addEventListener("change",({target:{value}})=>{
+            cambiarCantidadProducto(element._id,value);
+        });
 
         let btnEliminar=document.createElement("button");
         btnEliminar.classList.add("eliminarProducto");
@@ -48,46 +70,70 @@ function renderizarProductosCarrito(productos)
 
     });
 }
-function verificarUsuario()
-{
-    if(localStorage.getItem("usuarioLogeado")===null)
-    {
-        /**Si no hay usuario logeado */
-        let aside=document.querySelector(".aside");
-        aside.setAttribute("style","display:none");
-       
-        let ul=document.querySelector(".header .nav ul");
-        let li=document.createElement("li");
-        let a=document.createElement("a");
-        let liRegistrar=document.createElement("li");
-        let aRegistrar=document.createElement("a");
 
-        a.setAttribute("href","/pages/login.html");
-        a.setAttribute("target","_black");
-        a.innerText="Login";
-        aRegistrar.setAttribute("href","/pages/registrar.html");
-        aRegistrar.setAttribute("target","_black");
-        aRegistrar.innerText="Registrar"
-        li.append(a);
-        liRegistrar.append(aRegistrar);
-        ul.append(li,liRegistrar);
-        
-        console.log("Sin usuario logeado");
-    }
-    else{
-        usuarioLogeado=JSON.parse(localStorage.getItem("usuarioLogeado"));
-        let nomUs=document.querySelector("#nombreUsuario");
-        let idUs=document.querySelector("#idUsuario");
-        let mailUs=document.querySelector("#maiUsuario");
-        
-        nomUs.innerHTML=usuarioLogeado._nombreUsuario;
-        idUs.innerHTML=usuarioLogeado._id;
-        mailUs.innerHTML=usuarioLogeado._mai;
+function cargarPerfil() {
 
-    }
+    /** Si existe un usuario logeado se mostrará la función vistaUsuarioLogeado(), caso contrario se 
+     * mostrará la función vistaUsuarioNoLogeado()
+     */
+
+    usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado")) ?? vistaUsuarioNoLogeado();
+
+    (usuarioLogeado !== undefined) && vistaUsuarioLogeado();
 
 }
 
+function vistaUsuarioNoLogeado() {
+    /** Si el usuario no esta logeado no se mostrara el aside y se agregará en el header
+     * los enlaces login y registrar
+     */
+    let aside = document.querySelector(".aside");
+    aside.setAttribute("style", "display:none");
+
+    let ul = document.querySelector(".header .nav ul");
+    let liLogin = document.createElement("li");
+    let aLogin = document.createElement("a");
+    let liRegistrar = document.createElement("li");
+    let aRegistrar = document.createElement("a");
+
+    aLogin.setAttribute("href", "/pages/login.html");
+    aLogin.innerText = "Login";
+    aRegistrar.setAttribute("href", "/pages/registrar.html");
+    aRegistrar.innerText = "Registrar"
+
+    liLogin.append(aLogin);
+    liRegistrar.append(aRegistrar);
+    ul.append(liLogin, liRegistrar);
+
+    console.log("Ningun usuario logeado");
+}
+
+function vistaUsuarioLogeado() {
+
+    /** Si mostrará el elemento aside con los datos del usuario logeado*/
+    let divInfoUsu = document.querySelector(".informacionUsuario ul")
+    divInfoUsu.innerHTML = `<li>${usuarioLogeado._id}</li>
+                            <li>${usuarioLogeado._nombreUsuario}</li>
+                            <li>${usuarioLogeado._mai}</li>`;
+    console.log(`Usuario logeado ${usuarioLogeado._nombreUsuario}`);
+}
+
+function cambiarCantidadProducto(idProducto,nuevoCantidad)
+{
+    /**
+     * Se creo un nuevo arrya con la cantida modificada del producto, luego se modifica el valor en el local 
+     * Storage y por ultimo se cargar los productos nuevamente.
+     */
+
+    let nuevoLista=productUsu.map((ele)=>{
+        ele._id===idProducto ? ele._cantidad=nuevoCantidad:"con";
+        return ele;
+    });
+    localStorage.setItem("Carrito",JSON.stringify(nuevoLista));
+    
+    cargarProductoDeUsuario();
+
+}
 /**EVENTOS */
 aCerrarSess.addEventListener("click",()=>{
     localStorage.removeItem("usuarioLogeado");
