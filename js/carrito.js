@@ -1,11 +1,11 @@
 
-
-
 /**VARIABLES */
 let listaProductoCarrito=JSON.parse(localStorage.getItem("Carrito"));
 let aCerrarSess=document.querySelector("#cerrSes");
 let usuarioLogeado;
+
 verificarUsuario();
+
 renderizarProductosCarrito(listaProductoCarrito);
 
 /**FUNCIONES */

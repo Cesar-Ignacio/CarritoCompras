@@ -22,7 +22,6 @@ class Carrito {
     }
 }
 
-
 /** ARRAY  VARIABLES*/
 
 let listaProductos = [
@@ -32,13 +31,12 @@ let listaProductos = [
     new Producto(4, "Licuador XX", "Marca sm con tecnologia ultra sention", 57, 4),
     new Producto(5, "Cafetera", "Marca sm con tecnologia ultra sention", 200, 4),
 ]
+
 let listaProductoCarrito = [];
 
 let aCerrarSesseion = document.querySelector("#cerrSes");
 
 let usuarioLogeado;
-
-
 
 /** MAIN */
 
@@ -46,38 +44,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
     cargarPerfil();
     cargarProductos();
-    verificarCarrito();
+    cargarCarrito();
     renderizarProductos(listaProductos);
 });
 
 
 
 /** FUNCIONES */
-function agregerProCarrito(producto) {
-
-    if (usuarioLogeado !== undefined) {
-        let proCarr = new Carrito(usuarioLogeado._id, producto._id, producto._nombreProducto, producto._descripcion, 1, producto._precio);
-        listaProductoCarrito.push(proCarr);
-        localStorage.setItem("Carrito", JSON.stringify(listaProductoCarrito));
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Se agrego el producto al carrito",
-            showConfirmButton: false,
-            timer: 1500
-        });
-    }
-    else {
-        Swal.fire({
-            text: "No puede agregar productos al carrito si no esta logeado",
-            title: "No existe usuario",
-            icon: "error"
-        });
-    }
-
+function agregerProCarrito(producto) { 
+    /**
+     * Si no existe un usuario se mostrar una leyenda, caso contrario se agregara un nuevo producto al array "listaProductoCarrito"
+     * (un objeto carrito) y luego se actualizará en el localStorage
+     */
+  
+    (usuarioLogeado === undefined) ? Swal.fire({
+        text: "No puede agregar productos al carrito si no esta logeado",
+        title: "No existe usuario",
+        icon: "error"
+    }) : listaProductoCarrito.push(new Carrito(usuarioLogeado._id, producto._id, producto._nombreProducto, producto._descripcion, 1, producto._precio))
+    localStorage.setItem("Carrito", JSON.stringify(listaProductoCarrito));
+    Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Se agrego el producto al carrito",
+        showConfirmButton: false,
+        timer: 1500
+    });
 }
 
 function renderizarProductos(productos) {
+
+    /**
+     * Recorre el array productos y lo muestra en html
+     */
+
     let secProductos = document.querySelector(".main .productos")
 
     productos.forEach(element => {
@@ -113,21 +113,16 @@ function renderizarProductos(productos) {
 }
 
 function cargarProductos() {
-    /**Si no existe el valor Productos en el Local Storage lo creamos, caso contrario actualizamos la viable local*/
-    let listaProLs=JSON.parse(localStorage.getItem("Productos")) ?? localStorage.setItem("Productos",JSON.stringify(listaProductos));
-    listaProLs===undefined ?console.log("ADD Productos LocalStorage"):listaProductos=listaProLs;console.log("Productos Actualizados del LocalStorage");
+    /**Si no existe el valor Productos en el Local Storage lo creamos, caso contrario actualizamos la variable local*/
+    let listaProLs = JSON.parse(localStorage.getItem("Productos")) ?? localStorage.setItem("Productos", JSON.stringify(listaProductos));
+    listaProLs === undefined ? console.log("ADD Productos LocalStorage") : listaProductos = listaProLs;
 }
 
-function verificarCarrito() {
-    if (localStorage.getItem("Carrito") === null) {
-        /** Si no existe se crea */
-        localStorage.setItem("Carrito", JSON.stringify(listaProductoCarrito));
-        console.log("Se crea el valor Carrito");
-    }
-    else {
-        listaProductoCarrito = JSON.parse(localStorage.getItem("Carrito"));
-        console.log("se actualizo el array (listaProductoCarrito)")
-    }
+function cargarCarrito() {
+    /** Si no existe el valor carrito se crea local storage, caso 
+     * contrario se actulaliza la variable local*/
+    let listCarritoLS = JSON.parse(localStorage.getItem("Carrito")) ?? localStorage.setItem("Carrito", JSON.stringify(listaProductoCarrito));
+    (listCarritoLS === undefined) ? console.log("ADD Carrito LocalStorage") : listaProductoCarrito = listCarritoLS;
 }
 
 function cargarPerfil() {
@@ -136,9 +131,9 @@ function cargarPerfil() {
      * mostrará la función vistaUsuarioNoLogeado()
      */
 
-    usuarioLogeado=JSON.parse(localStorage.getItem("usuarioLogeado")) ?? vistaUsuarioNoLogeado();
+    usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado")) ?? vistaUsuarioNoLogeado();
 
-    (usuarioLogeado!==undefined)&&vistaUsuarioLogeado();
+    (usuarioLogeado !== undefined) && vistaUsuarioLogeado();
 
 }
 
