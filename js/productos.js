@@ -113,33 +113,9 @@ function renderizarProductos(productos) {
     secProductos.innerHTML="";
     productos.forEach(element => {
 
-        let divProducto = document.createElement("div");
-        divProducto.classList.add("producto")
+        (usuarioLogeado?._id===101)?vistaAdmin(element,secProductos):vistaUsuario(element,secProductos);
 
-        let divImg = document.createElement("div");
-        divImg.classList.add("imgProducto");
-
-        let img = document.createElement("img");
-        img.setAttribute("alt", "imgProducto");
-
-        let divInfoPro = document.createElement("div");
-        divInfoPro.classList.add("infoProducto");
-        divInfoPro.innerHTML = ` <Strong>${element._nombreProducto}</Strong>
-                                <p>${element._descripcion}</p>
-                                <strong>$${element._precio}</strong>`;
-
-        let btn = document.createElement("button");
-        btn.classList.add("agregarCarrito");
-        btn.innerText = "Agregar";
-
-        btn.addEventListener("click", () => {
-            agregerProCarrito(element);
-        });
-
-        divInfoPro.appendChild(btn);
-        divImg.appendChild(img);
-        divProducto.append(divImg, divInfoPro);
-        secProductos.append(divProducto);
+       
     });
 }
 
@@ -165,8 +141,9 @@ function cargarPerfil() {
     usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado")) ?? vistaUsuarioNoLogeado();
 
     (usuarioLogeado !== undefined) && vistaUsuarioLogeado();
-
+   
 }
+
 function cargarUsuarios()
 {
     JSON.parse(localStorage.getItem("Usuarios")) ?? localStorage.setItem("Usuarios", JSON.stringify(listaUsuarios));    
@@ -205,6 +182,109 @@ function vistaUsuarioLogeado() {
                             <li>${usuarioLogeado._nombreUsuario}</li>
                             <li>${usuarioLogeado._mai}</li>`;
     console.log(`Usuario logeado ${usuarioLogeado._nombreUsuario}`);
+}
+
+function vistaUsuario(element,secProductos)
+{
+    let divProducto = document.createElement("div");
+    divProducto.classList.add("producto")
+
+    let divImg = document.createElement("div");
+    divImg.classList.add("imgProducto");
+
+    let img = document.createElement("img");
+    img.setAttribute("alt", "imgProducto");
+
+    let divInfoPro = document.createElement("div");
+    divInfoPro.classList.add("infoProducto");
+    divInfoPro.innerHTML = ` <Strong>${element._nombreProducto}</Strong>
+                            <p>${element._descripcion}</p>
+                            <strong>$${element._precio}</strong>
+                            <strong>Disponible ${element._stock || "sin stock"}</strong>`;
+
+    let btn = document.createElement("button");
+    btn.classList.add("agregarCarrito");
+    btn.innerText = "Agregar";
+
+    element._stock||btn.setAttribute("style","display:none")
+
+    btn.addEventListener("click", () => {
+        agregerProCarrito(element);
+    });
+
+
+    divInfoPro.appendChild(btn);
+    divImg.appendChild(img);
+    divProducto.append(divImg, divInfoPro);
+    secProductos.append(divProducto);
+}
+
+function vistaAdmin(element,secProductos)
+{
+
+    let divProducto=document.createElement("div");
+    divProducto.classList.add("producto");
+
+    let labelNomPro=document.createElement("label");
+    labelNomPro.innerText="Nombre Producto";
+    labelNomPro.setAttribute("for","nombreProducto");
+
+    let inputNomPro=document.createElement("input");
+    inputNomPro.setAttribute("type","text");
+    inputNomPro.setAttribute("id","nombreProducto");
+    inputNomPro.setAttribute("value",element._nombreProducto);
+
+    let labelDesPro=document.createElement("label");
+    labelDesPro.innerText="Descripción";
+    labelDesPro.setAttribute("for","descripcionProducto");
+
+    let texArDesPro=document.createElement("textarea");
+    texArDesPro.setAttribute("id","descripcionProducto");
+    texArDesPro.innerText=element._descripcion;
+
+    let labelPrePro=document.createElement("label");
+    labelPrePro.innerText="Precio";
+    labelPrePro.setAttribute("for","precioProducto");
+
+    let inputPrePro=document.createElement("input");
+    inputPrePro.setAttribute("type","number");
+    inputPrePro.setAttribute("id","precioProducto");
+    inputPrePro.setAttribute("value",element._precio);
+
+    let labelStoPro=document.createElement("label");
+    labelStoPro.innerText="Stock";
+    labelStoPro.setAttribute("for","stockProducto");
+
+    let inputStoPro=document.createElement("input");
+    inputStoPro.setAttribute("type","text");
+    inputStoPro.setAttribute("id","stockProducto");
+    inputStoPro.setAttribute("value",element._stock);
+
+    let btActualizar=document.createElement("button");
+    btActualizar.setAttribute("id","btnActualizar");
+    btActualizar.innerText="Editar";
+
+    btActualizar.addEventListener("click",()=>{
+        actualizarProducto(element,inputStoPro.value,inputNomPro.value,inputPrePro.value,texArDesPro.value);
+    });
+
+    labelNomPro.append(inputNomPro);
+    labelDesPro.append(texArDesPro);
+    labelPrePro.append(inputPrePro);
+    labelStoPro.append(inputStoPro);
+    divProducto.append(labelNomPro,labelDesPro,labelPrePro,labelStoPro,btActualizar);
+    secProductos.append(divProducto);
+
+}
+
+function actualizarProducto(element,nStock,nNombrePro,nPrecio,nDescr)
+{
+    listaProductos=listaProductos.map((ele)=>{
+        (ele._id===element._id)&&(ele._stock=nStock,ele._nombreProducto=nNombrePro,ele._precio=nPrecio,ele._descripcion=nDescr)
+        return ele;
+    });
+    
+    localStorage.setItem("Productos",JSON.stringify(listaProductos));
 }
 
 /**EVENTOS */

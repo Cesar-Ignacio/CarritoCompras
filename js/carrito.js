@@ -1,83 +1,91 @@
 
 /**VARIABLES */
-let listaProductoCarrito=JSON.parse(localStorage.getItem("Carrito"));
-let aCerrarSess=document.querySelector("#cerrSes");
-let btnLimpiarCarrito=document.querySelector(".vaciarCarrito");
+let listaProductoCarrito = JSON.parse(localStorage.getItem("Carrito"));
+let listaProductos = JSON.parse(localStorage.getItem("Productos"));
+let aCerrarSess = document.querySelector("#cerrSes");
+let btnLimpiarCarrito = document.querySelector(".vaciarCarrito");
+let btnFinalizarComprar = document.querySelector(".finalizarCompra");
 let usuarioLogeado;
 let productUsu;
 
 
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded", () => {
     cargarPerfil();
     cargarProductoDeUsuario();
 });
 
 /**FUNCIONES */
 
-function cargarProductoDeUsuario()
-{   
+function cargarProductoDeUsuario() {
     /**
      * Se crea un arrya con los productos del usaurio logeado.
      * 
      */
 
-    let cantidadPro=document.querySelector("#cantidadProductos");
+    let cantidadPro = document.querySelector("#cantidadProductos");
 
-    let totalFinal=document.querySelector("#total");
+    let totalFinal = document.querySelector("#total");
 
-    productUsu=listaProductoCarrito.filter((ele)=>ele._idUsuario===(usuarioLogeado?._id?? -1))
-    
-    let {total,cantidad}=productUsu.reduce((acc,ele)=>{
-      (acc["total"])?acc["total"]+=ele._total:acc["total"]=ele._total; 
-      (acc["cantidad"])?acc["cantidad"]+=parseInt(ele._cantidad):acc["cantidad"]=parseInt(ele._cantidad);
+    productUsu = listaProductoCarrito.filter((ele) => ele._idUsuario === (usuarioLogeado?._id ?? -1))
+
+    let { total, cantidad } = productUsu.reduce((acc, ele) => {
+        (acc["total"]) ? acc["total"] += ele._total : acc["total"] = ele._total;
+        (acc["cantidad"]) ? acc["cantidad"] += parseInt(ele._cantidad) : acc["cantidad"] = parseInt(ele._cantidad);
         return acc;
-    },{});
+    }, {});
 
-    cantidadPro.innerText=cantidad?? 0;
-    totalFinal.innerText=total??0;
+    cantidadPro.innerText = cantidad ?? 0;
+    totalFinal.innerText = total ?? 0;
 
     renderizarProductosCarrito(productUsu);
-}   
+}
 
-function renderizarProductosCarrito(productos)
-{
-    let secProductosCarrito=document.querySelector(".productosComprados");
-    secProductosCarrito.innerHTML=" ";
+function renderizarProductosCarrito(productos) {
+    let secProductosCarrito = document.querySelector(".productosComprados");
+    secProductosCarrito.innerHTML = " ";
+
     productos.forEach(element => {
 
-        let divPro=document.createElement("div");
+        let { _stock: stockProducto } = listaProductos.find((ele) => ele._id === element._id);
+
+        let divPro = document.createElement("div");
         divPro.classList.add("productoCarrito");
 
-        let divImgPro=document.createElement("div")
+        let divImgPro = document.createElement("div")
         divImgPro.classList.add("imgProCarrito");
-    
-        let imgPro=document.createElement("img");
-        imgPro.setAttribute("alt","imgProductoCarrito");
 
-        let divInfoPro=document.createElement("div");
+        let imgPro = document.createElement("img");
+        imgPro.setAttribute("alt", "imgProductoCarrito");
+
+        let divInfoPro = document.createElement("div");
         divInfoPro.classList.add("infoProCarrito");
-        divInfoPro.innerHTML=`<strong>${element._nombreProducto}</strong>
+        divInfoPro.innerHTML = `<strong>${element._nombreProducto}</strong>
                               <strong>Precio Unidad $${element._precioUnidad}</strong> 
                               <strong>Total $${element._total}</strong>`;
-        let inputCantiPro=document.createElement("input");
-        inputCantiPro.setAttribute("type","number")
-        inputCantiPro.setAttribute("value",`${element._cantidad}`);
+        let inputCantiPro = document.createElement("input");
+        inputCantiPro.setAttribute("type", "number");
+        inputCantiPro.setAttribute("pattern", "^[0-9]+");
+        inputCantiPro.setAttribute("min", "1");
+        inputCantiPro.setAttribute("max", stockProducto);
+        inputCantiPro.setAttribute("value", `${element._cantidad}`);
 
-        inputCantiPro.addEventListener("change",({target:{value}})=>{
-            cambiarCantidadProducto(element._id,value);
+        inputCantiPro.addEventListener("change", ({ target: { value } }) => {
+            cambiarCantidadProducto(element._id, value);
         });
+        let cantidDisp = document.createElement("strong");
+        cantidDisp.innerText = `${stockProducto} disponibles`;
 
-        let btnEliminar=document.createElement("button");
+        let btnEliminar = document.createElement("button");
         btnEliminar.classList.add("eliminarProducto");
-        btnEliminar.innerText="Eliminar";
+        btnEliminar.innerText = "Eliminar";
 
         /**EVENTOS */
-        btnEliminar.addEventListener("click",()=>{
+        btnEliminar.addEventListener("click", () => {
             eleminarProducto(element._id);
         });
 
         divImgPro.append(imgPro);
-        divPro.append(divImgPro,divInfoPro,inputCantiPro,btnEliminar);
+        divPro.append(divImgPro, divInfoPro, inputCantiPro, cantidDisp, btnEliminar);
         secProductosCarrito.append(divPro);
 
     });
@@ -130,44 +138,60 @@ function vistaUsuarioLogeado() {
     console.log(`Usuario logeado ${usuarioLogeado._nombreUsuario}`);
 }
 
-function cambiarCantidadProducto(idProducto,nuevoCantidad)
-{
+function cambiarCantidadProducto(idProducto, nuevoCantidad) {
     /**
      * Se modifica la cantida y el total  del producto. Luego se actualizar el valor en el local 
      * Storage y por ultimo se cargar los productos nuevamente.
      */
 
-    listaProductoCarrito=listaProductoCarrito.map((ele)=>{
-        (ele._id===idProducto && ele._idUsuario===usuarioLogeado._id)&&(ele._cantidad=nuevoCantidad, ele._total=ele._precioUnidad*nuevoCantidad);
+    listaProductoCarrito = listaProductoCarrito.map((ele) => {
+        (ele._id === idProducto && ele._idUsuario === usuarioLogeado._id) && (ele._cantidad = nuevoCantidad, ele._total = ele._precioUnidad * nuevoCantidad);
         return ele;
     });
-    localStorage.setItem("Carrito",JSON.stringify(listaProductoCarrito));
-    
+    localStorage.setItem("Carrito", JSON.stringify(listaProductoCarrito));
+
     cargarProductoDeUsuario();
 
 }
 
-function eleminarProducto(idProducto)
-{
+function eleminarProducto(idProducto) {
     /**
      * Eliminamos el producto seleccionado del usuario loegado
      */
-    let indice=listaProductoCarrito.findIndex((ele)=>ele._id===idProducto && ele._idUsuario===usuarioLogeado._id);
-    listaProductoCarrito.splice(indice,1);
-    localStorage.setItem("Carrito",JSON.stringify(listaProductoCarrito));
+    let indice = listaProductoCarrito.findIndex((ele) => ele._id === idProducto && ele._idUsuario === usuarioLogeado._id);
+    listaProductoCarrito.splice(indice, 1);
+    localStorage.setItem("Carrito", JSON.stringify(listaProductoCarrito));
+    location.reload();
+}
+
+function vaciarCarrito() {
+    listaProductoCarrito = listaProductoCarrito.filter((ele) => ele._idUsuario !== usuarioLogeado._id);
+    localStorage.setItem("Carrito", JSON.stringify(listaProductoCarrito));
     location.reload();
 }
 /**EVENTOS */
-aCerrarSess.addEventListener("click",()=>{
+aCerrarSess.addEventListener("click", () => {
     localStorage.removeItem("usuarioLogeado");
     location.reload()
 })
 
-btnLimpiarCarrito.addEventListener("click",()=>{
+btnLimpiarCarrito.addEventListener("click", () => {
     /**
      * Eliminamos todos los productos que tengan el id del usuario logeado actualment
      */
-    listaProductoCarrito=listaProductoCarrito.filter((ele)=>ele._idUsuario!==usuarioLogeado._id);
-    localStorage.setItem("Carrito",JSON.stringify(listaProductoCarrito));
-    location.reload();
+    vaciarCarrito()
+});
+
+btnFinalizarComprar.addEventListener("click", () => {
+
+    listaProductos = listaProductos.map((element) => {
+
+        let proUsu = productUsu.find((ele) => ele._id === element._id);
+        (proUsu !== undefined) ? (element._stock -= proUsu._cantidad) : "";
+        return element;
+    });
+
+    localStorage.setItem("Productos", JSON.stringify(listaProductos));
+    
+    vaciarCarrito();
 });
