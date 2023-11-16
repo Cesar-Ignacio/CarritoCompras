@@ -2,8 +2,10 @@
 /**VARIABLES */
 let listaProductoCarrito=JSON.parse(localStorage.getItem("Carrito"));
 let aCerrarSess=document.querySelector("#cerrSes");
+let btnLimpiarCarrito=document.querySelector(".vaciarCarrito");
 let usuarioLogeado;
 let productUsu;
+
 
 document.addEventListener("DOMContentLoaded",()=>{
     cargarPerfil();
@@ -69,12 +71,13 @@ function renderizarProductosCarrito(productos)
         btnEliminar.classList.add("eliminarProducto");
         btnEliminar.innerText="Eliminar";
 
-        let btnEditar=document.createElement("button");
-        btnEditar.classList.add("editarProducto");
-        btnEditar.innerHTML="Editar";
+        /**EVENTOS */
+        btnEliminar.addEventListener("click",()=>{
+            eleminarProducto(element._id);
+        });
 
         divImgPro.append(imgPro);
-        divPro.append(divImgPro,divInfoPro,inputCantiPro,btnEliminar,btnEditar);
+        divPro.append(divImgPro,divInfoPro,inputCantiPro,btnEliminar);
         secProductosCarrito.append(divPro);
 
     });
@@ -130,21 +133,41 @@ function vistaUsuarioLogeado() {
 function cambiarCantidadProducto(idProducto,nuevoCantidad)
 {
     /**
-     * Se creo un nuevo arrya con la cantida, total modificada del producto, luego se modifica el valor en el local 
+     * Se modifica la cantida y el total  del producto. Luego se actualizar el valor en el local 
      * Storage y por ultimo se cargar los productos nuevamente.
      */
 
-    let nuevoLista=productUsu.map((ele)=>{
-        ele._id===idProducto&&(ele._cantidad=nuevoCantidad, ele._total=ele._precioUnidad*nuevoCantidad);
+    listaProductoCarrito=listaProductoCarrito.map((ele)=>{
+        (ele._id===idProducto && ele._idUsuario===usuarioLogeado._id)&&(ele._cantidad=nuevoCantidad, ele._total=ele._precioUnidad*nuevoCantidad);
         return ele;
     });
-    localStorage.setItem("Carrito",JSON.stringify(nuevoLista));
+    localStorage.setItem("Carrito",JSON.stringify(listaProductoCarrito));
     
     cargarProductoDeUsuario();
 
+}
+
+function eleminarProducto(idProducto)
+{
+    /**
+     * Eliminamos el producto seleccionado del usuario loegado
+     */
+    let indice=listaProductoCarrito.findIndex((ele)=>ele._id===idProducto && ele._idUsuario===usuarioLogeado._id);
+    listaProductoCarrito.splice(indice,1);
+    localStorage.setItem("Carrito",JSON.stringify(listaProductoCarrito));
+    location.reload();
 }
 /**EVENTOS */
 aCerrarSess.addEventListener("click",()=>{
     localStorage.removeItem("usuarioLogeado");
     location.reload()
 })
+
+btnLimpiarCarrito.addEventListener("click",()=>{
+    /**
+     * Eliminamos todos los productos que tengan el id del usuario logeado actualment
+     */
+    listaProductoCarrito=listaProductoCarrito.filter((ele)=>ele._idUsuario!==usuarioLogeado._id);
+    localStorage.setItem("Carrito",JSON.stringify(listaProductoCarrito));
+    location.reload();
+});

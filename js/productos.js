@@ -1,9 +1,10 @@
 
 /** CLASS */
 class Producto {
-    constructor(id, nombreProducto, descripcion, precio, stock) {
+    constructor(id,nombreProducto,categoria, descripcion, precio, stock) {
         this._id = id;
         this._nombreProducto = nombreProducto;
+        this._categoria=categoria;
         this._descripcion = descripcion;
         this._precio = precio;
         this._stock = stock;
@@ -26,17 +27,18 @@ class Carrito {
 /** ARRAY  VARIABLES*/
 
 let listaProductos = [
-    new Producto(1, "Auricular Sm", "Marca sm con tecnologia ultra sention", 500, 5),
-    new Producto(2, "TV SMART", "Marca sm con tecnologia ultra sention", 100, 0),
-    new Producto(3, "Parlante XR", "Marca sm con tecnologia ultra sention", 80, 8),
-    new Producto(4, "Licuador XX", "Marca sm con tecnologia ultra sention", 57, 4),
-    new Producto(5, "Cafetera", "Marca sm con tecnologia ultra sention", 200, 4),
+    new Producto(1, "Auricular Sm","Auriculares", "Marca sm con tecnologia ultra sention", 500, 5),
+    new Producto(2, "TV SMART","Telivisores","Marca sm con tecnologia ultra sention", 100, 0),
+    new Producto(3, "Parlante XR","Audio", "Marca sm con tecnologia ultra sention", 80, 8),
+    new Producto(4, "Licuador XX","Electrodomesticos", "Marca sm con tecnologia ultra sention", 57, 4),
+    new Producto(5, "Cafetera","Electrodomesticos", "Marca sm con tecnologia ultra sention", 200, 4),
 ]
 
 let listaProductoCarrito = [];
 
 let aCerrarSesseion = document.querySelector("#cerrSes");
-
+let inputBuscar=document.querySelector("#buscarProducto");
+let selCategoria=document.querySelector("#categoriaProducto");
 let usuarioLogeado;
 
 /** MAIN */
@@ -52,6 +54,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /** FUNCIONES */
+
+function verificarProducto(producto)
+{
+    /**
+     * Se valida que el nuevo producto no exista en el carrito del usuario logeado
+     */
+    let indice=listaProductoCarrito.findIndex((ele)=>ele._id===producto._id && ele._idUsuario===usuarioLogeado._id);
+
+    indice<0?(listaProductoCarrito.push(new Carrito(usuarioLogeado._id, producto._id, producto._nombreProducto, producto._descripcion, 1, producto._precio)), 
+    localStorage.setItem("Carrito", JSON.stringify(listaProductoCarrito)),
+    Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Se agrego el producto al carrito",
+        showConfirmButton: false,
+        timer: 1500
+    })): Swal.fire({
+        title: "El producto ya existe en tu carrito",
+        icon: "info",
+        showConfirmButton: false,
+        timer: 1500});
+}
+
 function agregerProCarrito(producto) {
     /**
      * Si no existe un usuario se mostrar una leyenda, caso contrario se agregara un nuevo producto al array "listaProductoCarrito"
@@ -61,16 +86,8 @@ function agregerProCarrito(producto) {
         text: "No puede agregar productos al carrito si no esta logeado",
         title: "No existe usuario",
         icon: "error"
-    }):(listaProductoCarrito.push(new Carrito(usuarioLogeado._id, producto._id, producto._nombreProducto, producto._descripcion, 1, producto._precio)), 
-    localStorage.setItem("Carrito", JSON.stringify(listaProductoCarrito)),
-    Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Se agrego el producto al carrito",
-        showConfirmButton: false,
-        timer: 1500
-    }))
-   
+    }): verificarProducto(producto);
+
 }
 
 function renderizarProductos(productos) {
@@ -81,6 +98,7 @@ function renderizarProductos(productos) {
 
     let secProductos = document.querySelector(".main .productos")
 
+    secProductos.innerHTML="";
     productos.forEach(element => {
 
         let divProducto = document.createElement("div");
@@ -178,3 +196,11 @@ aCerrarSesseion.addEventListener("click", () => {
     localStorage.removeItem("usuarioLogeado");
     location.reload()
 })
+
+inputBuscar.addEventListener("keyup",({target:{value}})=>{
+    renderizarProductos(listaProductos.filter((ele)=>ele._nombreProducto.toUpperCase().includes(value.toUpperCase())));
+});
+
+selCategoria.addEventListener("click",({target:{value}})=>{
+    renderizarProductos(listaProductos.filter((ele)=>ele._categoria.toUpperCase().includes(value.toUpperCase())))
+});
