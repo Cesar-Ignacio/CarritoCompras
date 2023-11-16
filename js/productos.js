@@ -23,7 +23,14 @@ class Carrito {
         this._estado = true;
     }
 }
-
+class Usuario {
+    constructor(id,nombreUsuario, contrasenia, mail) {
+        this._id =id;
+        this._nombreUsuario = nombreUsuario;
+        this._contrasenia = contrasenia;
+        this._mai = mail;
+    }
+}
 /** ARRAY  VARIABLES*/
 
 let listaProductos = [
@@ -33,7 +40,11 @@ let listaProductos = [
     new Producto(4, "Licuador XX","Electrodomesticos", "Marca sm con tecnologia ultra sention", 57, 4),
     new Producto(5, "Cafetera","Electrodomesticos", "Marca sm con tecnologia ultra sention", 200, 4),
 ]
-
+let listaUsuarios = [
+    new Usuario(101,"admin", "admin", "admin@gamil"),
+    new Usuario(102,"Cesar", "123", "cesar@gamil"),
+    new Usuario(103,"Beto", "147", "beto@gamil")
+]
 let listaProductoCarrito = [];
 
 let aCerrarSesseion = document.querySelector("#cerrSes");
@@ -45,6 +56,7 @@ let usuarioLogeado;
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    cargarUsuarios();
     cargarPerfil();
     cargarProductos();
     cargarCarrito();
@@ -154,6 +166,10 @@ function cargarPerfil() {
 
     (usuarioLogeado !== undefined) && vistaUsuarioLogeado();
 
+}
+function cargarUsuarios()
+{
+    JSON.parse(localStorage.getItem("Usuarios")) ?? localStorage.setItem("Usuarios", JSON.stringify(listaUsuarios));    
 }
 
 function vistaUsuarioNoLogeado() {

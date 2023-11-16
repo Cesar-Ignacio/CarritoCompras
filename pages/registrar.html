@@ -9,7 +9,29 @@
 <body>
     <h1>Buy Funny</h1>
     <h2>Registrar</h2>
-    <form action=""></form>
+    <form action="">
+        <label for="idUsuario">
+            ID:
+            <input id="idUsuario" type="text" placeholder="" readonly="">
+        </label>
+        <br>
+        <label for="mailUsuario">
+            GMAIL:
+            <input id="mailUsuario" type="email">
+        </label>
+        <br>
+        <label for="nombreUsuario">
+            Nombre Usuario;
+            <input id="nombreUsuario" type="text">
+        </label>
+        <br>
+        <label for="passUsuario">
+            Contraseña:
+            <input id="passUsuario" type="password">
+        </label>
+        <button type="submit" id="guardarUsuario">Guardar</button>
+    </form>
 
+    <script src="/js/registrar.js" type="module"></script>
 </body>
 </html>
