@@ -56,11 +56,11 @@ function renderizarProductosCarrito(productos) {
 
         let imgPro = document.createElement("img");
         imgPro.setAttribute("alt", "imgProductoCarrito");
-
+        imgPro.setAttribute("src",element._urlImg);
         let divInfoPro = document.createElement("div");
         divInfoPro.classList.add("infoProCarrito");
-        divInfoPro.innerHTML = `<strong>${element._nombreProducto}</strong>
-                              <strong>Precio Unidad $${element._precioUnidad}</strong> 
+        divInfoPro.innerHTML = `<strong>${element._descripcion}</strong>
+                              <strong>P.U $${element._precioUnidad}</strong> 
                               <strong>Total $${element._total}</strong>`;
         let inputCantiPro = document.createElement("input");
         inputCantiPro.setAttribute("type", "number");

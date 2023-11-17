@@ -20,6 +20,14 @@
     flex-direction: column;
 }
 
+.imgProducto{
+    border: blue 1px solid;
+    width: 20rem;
+}
+.imgProducto img{
+    width: 100%;
+}
+
 /** Carrito*/
 .detalleCarrito{
     border: solid black 1px;
@@ -32,4 +40,16 @@
 }
 .productoCarrito{
     border: red solid 1px;
+}
+.imgProCarrito{
+    border: solid 1px yellow;
+    width: 15rem;
+}
+.imgProCarrito img{
+    width: 100%;
+}
+.infoProCarrito{
+    
+    display: flex;
+    flex-direction: column;
 }

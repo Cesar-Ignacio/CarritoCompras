@@ -1,18 +1,19 @@
 
 /** CLASS */
 class Producto {
-    constructor(id,nombreProducto,categoria, descripcion, precio, stock) {
+    constructor(id,nombreProducto,categoria, descripcion, precio, stock,img) {
         this._id = id;
         this._nombreProducto = nombreProducto;
         this._categoria=categoria;
         this._descripcion = descripcion;
         this._precio = precio;
         this._stock = stock;
+        this._urlImg=img;
         this._estado = true
     }
 }
 class Carrito {
-    constructor(idUsuario, id, nombreProducto, descripcion, cantidad, precio) {
+    constructor(idUsuario, id, nombreProducto, descripcion, cantidad, precio,img) {
         this._idUsuario = idUsuario;
         this._id = id;
         this._nombreProducto = nombreProducto;
@@ -20,6 +21,7 @@ class Carrito {
         this._cantidad = cantidad;
         this._precioUnidad = precio;
         this._total=precio;
+        this._urlImg=img;
         this._estado = true;
     }
 }
@@ -34,11 +36,11 @@ class Usuario {
 /** ARRAY  VARIABLES*/
 
 let listaProductos = [
-    new Producto(1, "Auricular Sm","Auriculares", "Marca sm con tecnologia ultra sention", 500, 5),
-    new Producto(2, "TV SMART","Telivisores","Marca sm con tecnologia ultra sention", 100, 0),
-    new Producto(3, "Parlante XR","Audio", "Marca sm con tecnologia ultra sention", 80, 8),
-    new Producto(4, "Licuador XX","Electrodomesticos", "Marca sm con tecnologia ultra sention", 57, 4),
-    new Producto(5, "Cafetera","Electrodomesticos", "Marca sm con tecnologia ultra sention", 200, 4),
+    new Producto(1, "Auricular","Auriculares", "AURICULAR MICROSOFT XBOX", 500, 5,"/assets/img/auricular.jpg"),
+    new Producto(2, "Smart TV","Telivisores","Smart TV 55” QLED 4K Samsung QN55Q65BAGCF", 100, 0,"/assets/img/tv.webp"),
+    new Producto(3, "Parlante","Audio", "Parlante Bluetooth Philco DJP10", 80, 8,"/assets/img/parlante.webp"),
+    new Producto(4, "Licuador","Electrodomesticos", "Smartlife Licuadora de Pie Smartlife SL-BL1008BPN", 57, 4,"/assets/img/licuadora.webp"),
+    new Producto(5, "Heladera","Electrodomesticos", "Heladera Con Freezer Gafa HGF378AFB Blanca 326lts", 200, 4,"/assets/img/heladera.jpg"),
 ]
 let listaUsuarios = [
     new Usuario(101,"admin", "admin", "admin@gamil"),
@@ -74,7 +76,8 @@ function verificarProducto(producto)
      */
     let indice=listaProductoCarrito.findIndex((ele)=>ele._id===producto._id && ele._idUsuario===usuarioLogeado._id);
 
-    indice<0?(listaProductoCarrito.push(new Carrito(usuarioLogeado._id, producto._id, producto._nombreProducto, producto._descripcion, 1, producto._precio)), 
+    indice<0?(listaProductoCarrito.push(new Carrito(usuarioLogeado._id, producto._id, producto._nombreProducto, producto._descripcion,
+                                         1, producto._precio,producto._urlImg)), 
     localStorage.setItem("Carrito", JSON.stringify(listaProductoCarrito)),
     Swal.fire({
         position: "top-end",
@@ -194,6 +197,7 @@ function vistaUsuario(element,secProductos)
 
     let img = document.createElement("img");
     img.setAttribute("alt", "imgProducto");
+    img.setAttribute("src",element._urlImg);
 
     let divInfoPro = document.createElement("div");
     divInfoPro.classList.add("infoProducto");
@@ -225,6 +229,11 @@ function vistaAdmin(element,secProductos)
     let divProducto=document.createElement("div");
     divProducto.classList.add("producto");
 
+    divProducto.innerHTML=`<label for="">
+                            ID
+                            <input type="text" value="${element._id}" readonly>        
+                            </label>`;
+    
     let labelNomPro=document.createElement("label");
     labelNomPro.innerText="Nombre Producto";
     labelNomPro.setAttribute("for","nombreProducto");
@@ -241,6 +250,15 @@ function vistaAdmin(element,secProductos)
     let texArDesPro=document.createElement("textarea");
     texArDesPro.setAttribute("id","descripcionProducto");
     texArDesPro.innerText=element._descripcion;
+
+    let labelCatPro=document.createElement("label");
+    labelCatPro.innerText="Categoría";
+    labelCatPro.setAttribute("for","categoriaProducto");
+
+    let inputCatPro=document.createElement("input");
+    inputCatPro.setAttribute("type","text");
+    inputCatPro.setAttribute("id","categoriaProducto");
+    inputCatPro.setAttribute("value",element._categoria);
 
     let labelPrePro=document.createElement("label");
     labelPrePro.innerText="Precio";
@@ -265,25 +283,35 @@ function vistaAdmin(element,secProductos)
     btActualizar.innerText="Editar";
 
     btActualizar.addEventListener("click",()=>{
-        actualizarProducto(element,inputStoPro.value,inputNomPro.value,inputPrePro.value,texArDesPro.value);
+        actualizarProducto(element,inputStoPro.value,inputNomPro.value,inputPrePro.value,texArDesPro.value,inputCatPro.value);
     });
 
     labelNomPro.append(inputNomPro);
     labelDesPro.append(texArDesPro);
+    labelCatPro.append(inputCatPro);
     labelPrePro.append(inputPrePro);
     labelStoPro.append(inputStoPro);
-    divProducto.append(labelNomPro,labelDesPro,labelPrePro,labelStoPro,btActualizar);
+    divProducto.append(labelNomPro,labelDesPro,labelCatPro,labelPrePro,labelStoPro,btActualizar);
     secProductos.append(divProducto);
 
 }
 
-function actualizarProducto(element,nStock,nNombrePro,nPrecio,nDescr)
+function actualizarProducto(element,nStock,nNombrePro,nPrecio,nDescr,nCategoria)
 {
     listaProductos=listaProductos.map((ele)=>{
-        (ele._id===element._id)&&(ele._stock=nStock,ele._nombreProducto=nNombrePro,ele._precio=nPrecio,ele._descripcion=nDescr)
+        (ele._id===element._id)&&(ele._stock=parseInt(nStock),ele._nombreProducto=nNombrePro,ele._precio=parseInt(nPrecio),
+                                 ele._descripcion=nDescr,ele._categoria=nCategoria);
         return ele;
     });
     
+    Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `Se modifico el producto con ID:${element._id}`,
+        showConfirmButton: false,
+        timer: 1500
+      });
+
     localStorage.setItem("Productos",JSON.stringify(listaProductos));
 }
 
