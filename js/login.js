@@ -11,8 +11,6 @@ let pMensaje = document.querySelector("main .mensajeError");
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    /**Si no existe la lista de usuarios en Local Storage se creo y recarga la página, caso contrario se actualiza la varible local */
-        
     console.log("Usuarios logeados :"+listaUsuarios.length );
     console.log(listaUsuarios);
     
@@ -30,13 +28,10 @@ btnLogin.addEventListener("click", (e) => {
 
     let usuario = listaUsuarios.find((usu) => usu._contrasenia === contraseniaUsuario && usu._nombreUsuario === nombreUsuario);
 
-    if (usuario !== undefined) {
-        localStorage.setItem("usuarioLogeado", JSON.stringify(usuario));
-        window.location.href = "../index.html";
-    }
-    else {
-        pMensaje.innerHTML = "El usuario no existe";
-    }
+
+    (usuario)?(localStorage.setItem("usuarioLogeado", JSON.stringify(usuario)),
+                window.location.href = "../index.html"):pMensaje.innerHTML = "El usuario no existe";;
+
 
 });
 

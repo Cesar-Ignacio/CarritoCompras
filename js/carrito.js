@@ -41,6 +41,7 @@ function cargarProductoDeUsuario() {
 }
 
 function renderizarProductosCarrito(productos) {
+   
     let secProductosCarrito = document.querySelector(".productosComprados");
     secProductosCarrito.innerHTML = " ";
 
@@ -99,7 +100,7 @@ function cargarPerfil() {
 
     usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado")) ?? vistaUsuarioNoLogeado();
 
-    (usuarioLogeado !== undefined) && vistaUsuarioLogeado();
+    (usuarioLogeado) && vistaUsuarioLogeado();
 
 }
 
@@ -161,13 +162,13 @@ function eleminarProducto(idProducto) {
     let indice = listaProductoCarrito.findIndex((ele) => ele._id === idProducto && ele._idUsuario === usuarioLogeado._id);
     listaProductoCarrito.splice(indice, 1);
     localStorage.setItem("Carrito", JSON.stringify(listaProductoCarrito));
-    location.reload();
+    cargarProductoDeUsuario();
 }
 
 function vaciarCarrito() {
     listaProductoCarrito = listaProductoCarrito.filter((ele) => ele._idUsuario !== usuarioLogeado._id);
     localStorage.setItem("Carrito", JSON.stringify(listaProductoCarrito));
-    location.reload();
+    cargarProductoDeUsuario();
 }
 /**EVENTOS */
 aCerrarSess.addEventListener("click", () => {
@@ -184,10 +185,16 @@ btnLimpiarCarrito.addEventListener("click", () => {
 
 btnFinalizarComprar.addEventListener("click", () => {
 
+    /**
+     * Recorremos los todos los productos.
+     * Verificamos que productos tiene el usuario.
+     * Si se encuentra el producto se restara al stock la cantidad a comprar de dicho producto.
+     */
+
     listaProductos = listaProductos.map((element) => {
 
         let proUsu = productUsu.find((ele) => ele._id === element._id);
-        (proUsu !== undefined) ? (element._stock -= proUsu._cantidad) : "";
+        (proUsu !== undefined) && (element._stock -= proUsu._cantidad);
         return element;
     });
 

@@ -33,6 +33,6 @@ btnGuardar.addEventListener("click",(e)=>{
     listaUsuarios.push(new Usuario(proximoID+1,inputNombUsu,inputPassUsu,inputEmail))
     localStorage.setItem("Usuarios",JSON.stringify(listaUsuarios));
 
-    window.location.href="/index.html";
+    window.location.href="../index.html";
 
 });
