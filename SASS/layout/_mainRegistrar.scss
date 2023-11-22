@@ -1,0 +1,53 @@
+
+.mainRegistrar{
+    background: #0f0c29;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family:$fuentePrimaria;
+
+    .mainTitulo{
+        color: white; 
+        margin-bottom: 0.5rem;
+        a{
+            text-decoration: none;
+            color: white;
+        }   
+    }
+}
+.mainFormRegistrar{
+    border: solid 1px rgb(236, 232, 232);
+    padding: 0.5em;
+    button{
+        background-color: rgb(36, 30, 30);
+        border: none;
+        margin-top: 0.5rem;
+        padding: 0.5em;
+        border-radius: 0.2rem;
+        color: white;
+        
+    }
+}
+
+.formInput{
+   
+    display:flex;
+    flex-direction: column;
+    padding: 0.2em;
+    color: white;
+    input{
+        border: none;
+        font-size: 1rem;
+        padding: 0.2em;
+        border-radius:0.2rem;
+    }
+    p{
+        margin-top: 0.1rem;
+        color: red;
+        font-size: 0.8rem;
+    }
+}

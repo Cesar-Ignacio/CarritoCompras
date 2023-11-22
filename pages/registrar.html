@@ -1,37 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar</title>
     <link rel="stylesheet" href="/CSS/style.css">
 </head>
-<body>
-    <h1>Buy Tech</h1>
-    <h2>Registrar</h2>
-    <form action="">
-        <label for="idUsuario">
-            ID:
-            <input id="idUsuario" type="text" placeholder="" readonly="">
-        </label>
-        <br>
-        <label for="mailUsuario">
-            GMAIL:
-            <input id="mailUsuario" type="email">
-        </label>
-        <br>
-        <label for="nombreUsuario">
-            Nombre Usuario;
-            <input id="nombreUsuario" type="text">
-        </label>
-        <br>
-        <label for="passUsuario">
-            Contraseña:
-            <input id="passUsuario" type="password">
-        </label>
-        <button type="submit" id="guardarUsuario">Guardar</button>
-    </form>
 
+<body>
+    <main class="mainRegistrar">
+        <h1 class="mainTitulo"><a href="/index.html">Buy Tech</a> Registrar</h1>
+        <div class="mainFormRegistrar"> 
+            <form action="">
+                <div class="formInput">
+                    <label for="idUsuario">id</label>
+                    <input id="idUsuario"  type="text" placeholder="" readonly="">
+                </div>
+                <div class="formInput">
+                    <label for="mailUsuario">mail</label>
+                    <input id="mailUsuario" required="" type="email">
+                    <p class="mensajeErrorMail"></p>
+                </div>
+                <div class="formInput">
+                    <label for="nombreUsuario">Nombre Usuario</label>
+                    <input id="nombreUsuario" required type="text">
+                </div>
+                <div class="formInput">
+                    <label for="passUsuario">Contraseña:</label>
+                    <input id="passUsuario" required type="password">
+                </div>
+
+                <button type="submit" id="guardarUsuario">Guardar</button>
+            </form>
+        </div>
+
+
+    </main>
     <script src="/js/registrar.js" type="module"></script>
 </body>
+
 </html>

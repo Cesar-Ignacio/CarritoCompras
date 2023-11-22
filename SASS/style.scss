@@ -1,6 +1,8 @@
-.aside{
-    border: solid 1px black;
-}
+@import "utilitis/variable";
+@import "bas/reset";
+
+@import "layout/aside";
+@import "layout/mainRegistrar";
 .main{
     margin-top: 1em;
     border: 1px rgb(62, 47, 47) solid;
