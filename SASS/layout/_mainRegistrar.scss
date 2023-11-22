@@ -21,16 +21,28 @@
 }
 .mainFormRegistrar{
     border: solid 1px rgb(236, 232, 232);
+    width: 25rem;
     padding: 0.5em;
-    button{
-        background-color: rgb(36, 30, 30);
-        border: none;
-        margin-top: 0.5rem;
-        padding: 0.5em;
-        border-radius: 0.2rem;
-        color: white;
-        
+
+    .footerFormRegistrar{
+        border-top:solid white 1px ;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 0.2em;
+        button{
+            background-color: rgb(36, 30, 30);
+            border: none;
+            padding: 0.5em;
+            border-radius: 0.2rem;
+            color: white;   
+        }
+        a{
+            
+            color: white;
+        }
     }
+    
 }
 
 .formInput{
@@ -46,7 +58,7 @@
         border-radius:0.2rem;
     }
     p{
-        margin-top: 0.1rem;
+        margin-top: 0.4rem;
         color: red;
         font-size: 0.8rem;
     }

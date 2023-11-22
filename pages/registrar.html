@@ -11,11 +11,11 @@
 <body>
     <main class="mainRegistrar">
         <h1 class="mainTitulo"><a href="/index.html">Buy Tech</a> Registrar</h1>
-        <div class="mainFormRegistrar"> 
+        <div class="mainFormRegistrar">
             <form action="">
                 <div class="formInput">
                     <label for="idUsuario">id</label>
-                    <input id="idUsuario"  type="text" placeholder="" readonly="">
+                    <input id="idUsuario" type="text" placeholder="" readonly="">
                 </div>
                 <div class="formInput">
                     <label for="mailUsuario">mail</label>
@@ -23,20 +23,24 @@
                     <p class="mensajeErrorMail"></p>
                 </div>
                 <div class="formInput">
-                    <label for="nombreUsuario">Nombre Usuario</label>
+                    <label for="nombreUsuario">nombre usuario</label>
                     <input id="nombreUsuario" required type="text">
+                    <p class="mensajeErrorNom"></p>
                 </div>
                 <div class="formInput">
-                    <label for="passUsuario">Contraseña:</label>
+                    <label for="passUsuario">contraseña</label>
                     <input id="passUsuario" required type="password">
+                    <p class="mensajeErrorPass"></p>
                 </div>
-
-                <button type="submit" id="guardarUsuario">Guardar</button>
+                <div class="footerFormRegistrar">
+                    <button type="submit" id="guardarUsuario">Guardar</button>
+                    <a href="/pages/login.html">Login</a>
+                    <a href="/index.html">Productos</a>
+                </div>
             </form>
         </div>
-
-
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/registrar.js" type="module"></script>
 </body>
 
