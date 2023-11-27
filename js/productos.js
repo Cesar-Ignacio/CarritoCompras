@@ -1,38 +1,4 @@
 
-/** CLASS */
-class Producto {
-    constructor(id, nombreProducto, categoria, descripcion, precio, stock, img) {
-        this._id = id;
-        this._nombreProducto = nombreProducto;
-        this._categoria = categoria;
-        this._descripcion = descripcion;
-        this._precio = precio;
-        this._stock = stock;
-        this._urlImg = img;
-        this._estado = true
-    }
-}
-class Carrito {
-    constructor(idUsuario, id, nombreProducto, descripcion, cantidad, precio, img) {
-        this._idUsuario = idUsuario;
-        this._id = id;
-        this._nombreProducto = nombreProducto;
-        this._descripcion = descripcion;
-        this._cantidad = cantidad;
-        this._precioUnidad = precio;
-        this._total = precio;
-        this._urlImg = img;
-        this._estado = true;
-    }
-}
-class Usuario {
-    constructor(id, nombreUsuario, contrasenia, mail) {
-        this._id = id;
-        this._nombreUsuario = nombreUsuario;
-        this._contrasenia = contrasenia;
-        this._mai = mail;
-    }
-}
 /** ARRAY  VARIABLES*/
 
 let listaProductos = [
@@ -49,15 +15,12 @@ let listaUsuarios = [
 ]
 let listaProductoCarrito = [];
 
-let aCerrarSesseion = document.querySelector("#cerrSes");
 let inputBuscar = document.querySelector("#buscarProducto");
 let selCategoria = document.querySelector("#categoriaProducto");
-let usuarioLogeado;
 
 /** MAIN */
 
 document.addEventListener("DOMContentLoaded", () => {
-
     cargarUsuarios();
     cargarPerfil();
     cargarProductos();
@@ -65,10 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderizarProductos(listaProductos);
 });
 
-
-
 /** FUNCIONES */
-
 function verificarProducto(producto) {
     /**
      * Se valida que el nuevo producto no exista en el carrito del usuario logeado
@@ -145,11 +105,9 @@ function cargarPerfil() {
     /** Si existe un usuario logeado se mostrará la función vistaUsuarioLogeado(), caso contrario se 
      * mostrará la función vistaUsuarioNoLogeado()
      */
-
     usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado")) ?? vistaUsuarioNoLogeado();
 
     (usuarioLogeado) && vistaUsuarioLogeado();
-
 }
 
 function cargarUsuarios() {

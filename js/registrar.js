@@ -1,12 +1,3 @@
-/**Clases */
-class Usuario {
-    constructor(id, nombreUsuario, contrasenia, mail) {
-        this._id = id;
-        this._nombreUsuario = nombreUsuario;
-        this._contrasenia = contrasenia;
-        this._mai = mail;
-    }
-}
 
 /**Variables */
 let btnGuardar = document.querySelector("#guardarUsuario");

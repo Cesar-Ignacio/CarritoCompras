@@ -1,5 +1,3 @@
-/**CLASS */
-
 
 /**VARIBLES */
 let listaUsuarios=JSON.parse(localStorage.getItem("Usuarios"))

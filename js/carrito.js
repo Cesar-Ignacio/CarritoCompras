@@ -2,10 +2,8 @@
 /**VARIABLES */
 let listaProductoCarrito = JSON.parse(localStorage.getItem("Carrito"));
 let listaProductos = JSON.parse(localStorage.getItem("Productos"));
-let aCerrarSess = document.querySelector("#cerrSes");
 let btnLimpiarCarrito = document.querySelector(".vaciarCarrito");
 let btnFinalizarComprar = document.querySelector(".finalizarCompra");
-let usuarioLogeado;
 let productUsu;
 
 
