@@ -3,32 +3,9 @@
 
 @import "layout/header";
 @import "layout/aside";
+@import "layout/mainProducto";
 @import "layout/mainRegistrar";
-.main{
-    margin-top: 1em;
-    border: 1px rgb(62, 47, 47) solid;
-}
 
-.productos{
-    padding: 0.5em;
-    display: grid;
-    grid-template-columns:1fr 1fr 1fr;
-    gap: 0.5em;
-}
-
-.producto{
-    border: red solid 1px;
-    display: flex;
-    flex-direction: column;
-}
-
-.imgProducto{
-    border: blue 1px solid;
-    width: 20rem;
-}
-.imgProducto img{
-    width: 100%;
-}
 
 /** Carrito*/
 .detalleCarrito{

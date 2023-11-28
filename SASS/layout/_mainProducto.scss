@@ -1,0 +1,34 @@
+.main{
+    margin-top: 1em;
+    padding: 0.2em;
+    border: 1px rgb(62, 47, 47) solid;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.catalogo{
+    border: solid red 1px;
+    width: 80%;
+}
+
+.productos{
+    padding: 0.5em;
+    display: grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap: 0.5em;
+}
+
+.producto{
+    border: red solid 1px;
+    display: flex;
+    flex-direction: column;
+}
+
+.imgProducto{
+    border: blue 1px solid;
+    width: 20rem;
+}
+.imgProducto img{
+    width: 100%;
+}

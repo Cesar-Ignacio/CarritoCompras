@@ -8,7 +8,7 @@ let listaProductoCarrito = [];
 
 let inputBuscar = document.querySelector("#buscarProducto");
 let selCategoria = document.querySelector("#categoriaProducto");
-
+let cantProCr=document.querySelector("#cantiProdCarri");
 /** MAIN */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -42,7 +42,9 @@ function verificarProducto(producto) {
             title: "Se agrego el producto al carrito",
             showConfirmButton: false,
             timer: 1500
-        })) : Swal.fire({
+        }),
+        cargarCantProduUsu()
+        ) : Swal.fire({
             title: "El producto ya existe en tu carrito",
             icon: "info",
             showConfirmButton: false,
@@ -122,8 +124,11 @@ function vistaUsuarioNoLogeado() {
     /** Si el usuario no esta logeado no se mostrara el aside y se agregará en el header
      * los enlaces login y registrar
      */
+    cantProCr.setAttribute("style","display:none");
+
     let aside = document.querySelector(".aside");
     aside.setAttribute("style", "display:none");
+
 
     let ul = document.querySelector(".header .nav ul");
     let liLogin = document.createElement("li");
@@ -146,11 +151,35 @@ function vistaUsuarioNoLogeado() {
 function vistaUsuarioLogeado() {
 
     /** Si mostrará el elemento aside con los datos del usuario logeado*/
+
+    cargarCantProduUsu();
+
     let divInfoUsu = document.querySelector(".informacionUsuario ul")
     divInfoUsu.innerHTML = `<li>${usuarioLogeado._id}</li>
                             <li>${usuarioLogeado._nombreUsuario}</li>
                             <li>${usuarioLogeado._mai}</li>`;
     console.log(`Usuario logeado ${usuarioLogeado._nombreUsuario}`);
+}
+
+function cargarCantProduUsu()
+{
+    /** Obtenemos los productos del carrrito del local Storage y hacemos un conteno de los 
+     * producto del usuario logeado, para luego editar su valor 
+     */
+
+    cargarCarrito()
+    
+    let ca=listaProductoCarrito.reduce((acc,ele)=>{ 
+        
+        if(ele._idUsuario===usuarioLogeado._id)
+        {
+            acc+=parseInt(ele._cantidad);
+        }
+
+        return acc;
+    },0)
+    
+    cantProCr.innerText=ca;
 }
 
 function vistaUsuario(element, secProductos) {
