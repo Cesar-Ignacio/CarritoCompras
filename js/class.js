@@ -1,8 +1,7 @@
 /** CLASS */
 class Producto {
-    constructor(id, nombreProducto, categoria, descripcion, precio, stock, img) {
+    constructor(id, categoria, descripcion, precio, stock, img) {
         this._id = id;
-        this._nombreProducto = nombreProducto;
         this._categoria = categoria;
         this._descripcion = descripcion;
         this._precio = precio;
@@ -12,10 +11,9 @@ class Producto {
     }
 }
 class Carrito {
-    constructor(idUsuario, id, nombreProducto, descripcion, cantidad, precio, img) {
+    constructor(idUsuario, id,descripcion, cantidad, precio, img) {
         this._idUsuario = idUsuario;
         this._id = id;
-        this._nombreProducto = nombreProducto;
         this._descripcion = descripcion;
         this._cantidad = cantidad;
         this._precioUnidad = precio;

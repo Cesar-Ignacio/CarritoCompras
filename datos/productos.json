@@ -1,0 +1,45 @@
+[
+    {
+        "id":1,
+        "categoria":"Auriculares",
+        "descripcion":"AURICULAR MICROSOFT XBOX",
+        "precio":500,
+        "stock":5,
+        "url":"/assets/img/auricular.jpg"
+    },
+    {
+        "id":2,
+        "categoria":"Televisores",
+        "descripcion":"Smart TV 55” QLED 4K Samsung QN55Q65BAGCF",
+        "precio":100,
+        "stock":0,
+        "url":"/assets/img/tv.webp"
+    },
+    {
+        "id":3,
+        "categoria":"Audio",
+        "descripcion":"Parlante Bluetooth Philco DJP10",
+        "precio":80,
+        "stock":8,
+        "url":"/assets/img/parlante.webp"
+    },
+    {
+        "id":4,
+        "categoria":"Electrodomesticos",
+        "descripcion":"Smartlife Licuadora de Pie Smartlife SL-BL1008BPN",
+        "precio":57,
+        "stock":4,
+        "url":"/assets/img/licuadora.webp"
+    },
+    {
+        "id":5,
+        "categoria":"Electrodomesticos",
+        "descripcion":"Heladera Con Freezer Gafa HGF378AFB Blanca 326lts",
+        "precio":200,
+        "stock":4,
+        "url":"/assets/img/heladera.jpg"
+    }
+
+]
+
+

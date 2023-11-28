@@ -1,0 +1,20 @@
+[
+    {
+        "id":101,
+        "nombreUsuario":"admin",
+        "contrasenia":"admin",
+        "mai":"admin@gamil"
+    },
+    {
+        "id":102,
+        "nombreUsuario":"Cesar",
+        "contrasenia":"123",
+        "mai":"cesar@gamil"
+    },
+    {
+        "id":103,
+        "nombreUsuario":"Beto",
+        "contrasenia":"147",
+        "mai":"beto@gamil"
+    }
+]

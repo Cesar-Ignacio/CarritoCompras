@@ -1,18 +1,9 @@
 
+
 /** ARRAY  VARIABLES*/
 
-let listaProductos = [
-    new Producto(1, "Auricular", "Auriculares", "AURICULAR MICROSOFT XBOX", 500, 5, "/assets/img/auricular.jpg"),
-    new Producto(2, "Smart TV", "Telivisores", "Smart TV 55” QLED 4K Samsung QN55Q65BAGCF", 100, 0, "/assets/img/tv.webp"),
-    new Producto(3, "Parlante", "Audio", "Parlante Bluetooth Philco DJP10", 80, 8, "/assets/img/parlante.webp"),
-    new Producto(4, "Licuador", "Electrodomesticos", "Smartlife Licuadora de Pie Smartlife SL-BL1008BPN", 57, 4, "/assets/img/licuadora.webp"),
-    new Producto(5, "Heladera", "Electrodomesticos", "Heladera Con Freezer Gafa HGF378AFB Blanca 326lts", 200, 4, "/assets/img/heladera.jpg"),
-]
-let listaUsuarios = [
-    new Usuario(101, "admin", "admin", "admin@gamil"),
-    new Usuario(102, "Cesar", "123", "cesar@gamil"),
-    new Usuario(103, "Beto", "147", "beto@gamil")
-]
+let listaProductos = []
+let listaUsuarios = []
 let listaProductoCarrito = [];
 
 let inputBuscar = document.querySelector("#buscarProducto");
@@ -21,11 +12,18 @@ let selCategoria = document.querySelector("#categoriaProducto");
 /** MAIN */
 
 document.addEventListener("DOMContentLoaded", () => {
+   
+    obtenerProJson().then(res=>{
+        res.forEach(producto=>{
+            listaProductos.push(new Producto(producto.id,producto.categoria,producto.descripcion,producto.precio,producto.stock,producto.url));
+        })
+        cargarProductos();
+        renderizarProductos(listaProductos);
+    })
     cargarUsuarios();
     cargarPerfil();
-    cargarProductos();
     cargarCarrito();
-    renderizarProductos(listaProductos);
+   
 });
 
 /** FUNCIONES */
@@ -33,10 +31,10 @@ function verificarProducto(producto) {
     /**
      * Se valida que el nuevo producto no exista en el carrito del usuario logeado
      */
+    console.log(producto);
     let indice = listaProductoCarrito.findIndex((ele) => ele._id === producto._id && ele._idUsuario === usuarioLogeado._id);
 
-    indice < 0 ? (listaProductoCarrito.push(new Carrito(usuarioLogeado._id, producto._id, producto._nombreProducto, producto._descripcion,
-        1, producto._precio, producto._urlImg)),
+    indice < 0 ? (listaProductoCarrito.push(new Carrito(usuarioLogeado._id, producto._id,producto._descripcion,1,producto._precio, producto._urlImg)),
         localStorage.setItem("Carrito", JSON.stringify(listaProductoCarrito)),
         Swal.fire({
             position: "top-end",
@@ -91,6 +89,7 @@ function cargarProductos() {
     /**Si no existe el valor Productos en el Local Storage lo creamos, caso contrario actualizamos la variable local*/
     let listaProLs = JSON.parse(localStorage.getItem("Productos")) ?? localStorage.setItem("Productos", JSON.stringify(listaProductos));
     (listaProLs) ? listaProductos = listaProLs : console.log("ADD Productos LocalStorage");
+    
 }
 
 function cargarCarrito() {
@@ -113,9 +112,10 @@ function cargarPerfil() {
 function cargarUsuarios() {
     /**
      * Si no existe el valor 'Usuarios' en Local Storage se crea uno con los 
-     * usuarios precargados por defecto en listaUsuarios
+     * usuarios del archivo json 
      */
-    JSON.parse(localStorage.getItem("Usuarios")) ?? localStorage.setItem("Usuarios", JSON.stringify(listaUsuarios));
+    JSON.parse(localStorage.getItem("Usuarios")) ?? obtenerUsuJson();
+ 
 }
 
 function vistaUsuarioNoLogeado() {
@@ -166,8 +166,7 @@ function vistaUsuario(element, secProductos) {
 
     let divInfoPro = document.createElement("div");
     divInfoPro.classList.add("infoProducto");
-    divInfoPro.innerHTML = ` <Strong>${element._nombreProducto}</Strong>
-                            <p>${element._descripcion}</p>
+    divInfoPro.innerHTML = `<p>${element._descripcion}</p>
                             <strong>$${element._precio}</strong>
                             <strong>Disponible ${element._stock || "sin stock"}</strong>`;
 
@@ -278,6 +277,27 @@ function actualizarProducto(element, nStock, nNombrePro, nPrecio, nDescr, nCateg
     localStorage.setItem("Productos", JSON.stringify(listaProductos));
 }
 
+async function obtenerUsuJson()
+{
+    let response= await fetch("/datos/usuarios.json")
+    let listaObjUsu= await response.json();
+    listaObjUsu.forEach(us=>{
+        listaUsuarios.push(new Usuario(us.id,us.nombreUsuario,us.contrasenia,us.mai))
+    })
+    localStorage.setItem("Usuarios", JSON.stringify(listaUsuarios))
+}
+
+function obtenerProJson()
+{
+    return new Promise((resolve,reject)=>{
+        fetch("/datos/productos.json")
+        .then(res=>res.json())
+        .then(data=>resolve(data))
+    })
+}
+
+
+
 /**EVENTOS */
 aCerrarSesseion.addEventListener("click", () => {
     localStorage.removeItem("usuarioLogeado");
@@ -285,7 +305,7 @@ aCerrarSesseion.addEventListener("click", () => {
 })
 
 inputBuscar.addEventListener("keyup", ({ target: { value } }) => {
-    renderizarProductos(listaProductos.filter((ele) => ele._nombreProducto.toUpperCase().includes(value.toUpperCase())));
+    renderizarProductos(listaProductos.filter((ele) => ele._descripcion.toUpperCase().includes(value.toUpperCase())));
 });
 
 selCategoria.addEventListener("click", ({ target: { value } }) => {

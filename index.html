@@ -14,21 +14,27 @@
             <h1>Buy Tech</h1>
         </div>
         <nav class="nav">
-            <ul>
-                <li><input type="search" id="buscarProducto" placeholder="Buscar Producto"></li>
-                <li><label for="categoriaProducto">
-                        Filtrar por categoria
-                        <select name="" id="categoriaProducto">
-                            <option value="">Todos</option>
-                            <option value="Auriculares">Auriculares</option>
-                            <option value="Telivisores">Telivisores</option>
-                            <option value="Electrodomesticos">Electrodomesticos</option>
-                        </select>
-                    </label>
-                </li>
+            <ul class="navLink">
                 <li><a href="/pages/carrito.html">Carrito</a></li>
-
             </ul>
+            <div class="buscardorFiltros">
+                <input class="buscador" type="search" id="buscarProducto" placeholder="Buscar Producto">
+                <select class="selector" name="" id="categoriaProducto">
+                    <option value="">Categorias</option>
+                    <option value="Auriculares">Auriculares</option>
+                    <option value="Audio">Audio</option>
+                    <option value="Televisores">Televisores</option>
+                    <option value="Electrodomesticos">Electrodomesticos</option>
+                </select>
+                <select class="selector" name="" id="marcaProducto">
+                    <option value="">Marcas</option>
+                    <option value="">Sony</option>
+                    <option value="">Motorola</option>
+                    <option value="">Philips</option>
+                    <option value="">Liliana</option>
+                </select>
+
+            </div>
         </nav>
     </header>
     <aside class="aside">
@@ -39,14 +45,14 @@
         <div class="informacionUsuario">
             <ul>
                 <!-- JS -->
-            </ul>          
+            </ul>
         </div>
         <a href="#" id="cerrSes">cerrar sesión</a>
     </aside>
     <main class="main">
         <h2>Productos</h2>
         <section class="productos">
-            <!-- JS  -->            
+            <!-- JS  -->
         </section>
     </main>
 

@@ -45,6 +45,9 @@ function renderizarProductosCarrito(productos) {
 
     productos.forEach(element => {
 
+
+        console.log(element);
+
         let { _stock: stockProducto } = listaProductos.find((ele) => ele._id === element._id);
 
         let divPro = document.createElement("div");
@@ -169,7 +172,7 @@ function vaciarCarrito() {
     cargarProductoDeUsuario();
 }
 /**EVENTOS */
-aCerrarSess.addEventListener("click", () => {
+aCerrarSesseion.addEventListener("click", () => {
     localStorage.removeItem("usuarioLogeado");
     location.reload()
 })
