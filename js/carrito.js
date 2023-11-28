@@ -10,6 +10,7 @@ let productUsu;
 document.addEventListener("DOMContentLoaded", () => {
     cargarPerfil();
     cargarProductoDeUsuario();
+
 });
 
 /**FUNCIONES */
@@ -32,6 +33,7 @@ function cargarProductoDeUsuario() {
         return acc;
     }, {});
 
+    cantProCr.innerText=cantidad?? 0;
     cantidadPro.innerText = cantidad ?? 0;
     totalFinal.innerText = total ?? 0;
 

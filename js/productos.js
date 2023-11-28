@@ -8,14 +8,14 @@ let listaProductoCarrito = [];
 
 let inputBuscar = document.querySelector("#buscarProducto");
 let selCategoria = document.querySelector("#categoriaProducto");
-let cantProCr=document.querySelector("#cantiProdCarri");
+
 /** MAIN */
 
 document.addEventListener("DOMContentLoaded", () => {
-   
-    obtenerProJson().then(res=>{
-        res.forEach(producto=>{
-            listaProductos.push(new Producto(producto.id,producto.categoria,producto.descripcion,producto.precio,producto.stock,producto.url));
+
+    obtenerProJson().then(res => {
+        res.forEach(producto => {
+            listaProductos.push(new Producto(producto.id, producto.categoria, producto.descripcion, producto.precio, producto.stock, producto.url));
         })
         cargarProductos();
         renderizarProductos(listaProductos);
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     cargarUsuarios();
     cargarPerfil();
     cargarCarrito();
-   
+
 });
 
 /** FUNCIONES */
@@ -34,7 +34,7 @@ function verificarProducto(producto) {
     console.log(producto);
     let indice = listaProductoCarrito.findIndex((ele) => ele._id === producto._id && ele._idUsuario === usuarioLogeado._id);
 
-    indice < 0 ? (listaProductoCarrito.push(new Carrito(usuarioLogeado._id, producto._id,producto._descripcion,1,producto._precio, producto._urlImg)),
+    indice < 0 ? (listaProductoCarrito.push(new Carrito(usuarioLogeado._id, producto._id, producto._descripcion, 1, producto._precio, producto._urlImg)),
         localStorage.setItem("Carrito", JSON.stringify(listaProductoCarrito)),
         Swal.fire({
             position: "top-end",
@@ -44,12 +44,12 @@ function verificarProducto(producto) {
             timer: 1500
         }),
         cargarCantProduUsu()
-        ) : Swal.fire({
-            title: "El producto ya existe en tu carrito",
-            icon: "info",
-            showConfirmButton: false,
-            timer: 1500
-        });
+    ) : Swal.fire({
+        title: "El producto ya existe en tu carrito",
+        icon: "info",
+        showConfirmButton: false,
+        timer: 1500
+    });
 }
 
 function agregerProCarrito(producto) {
@@ -91,7 +91,7 @@ function cargarProductos() {
     /**Si no existe el valor Productos en el Local Storage lo creamos, caso contrario actualizamos la variable local*/
     let listaProLs = JSON.parse(localStorage.getItem("Productos")) ?? localStorage.setItem("Productos", JSON.stringify(listaProductos));
     (listaProLs) ? listaProductos = listaProLs : console.log("ADD Productos LocalStorage");
-    
+
 }
 
 function cargarCarrito() {
@@ -117,14 +117,14 @@ function cargarUsuarios() {
      * usuarios del archivo json 
      */
     JSON.parse(localStorage.getItem("Usuarios")) ?? obtenerUsuJson();
- 
+
 }
 
 function vistaUsuarioNoLogeado() {
     /** Si el usuario no esta logeado no se mostrara el aside y se agregará en el header
      * los enlaces login y registrar
      */
-    cantProCr.setAttribute("style","display:none");
+    cantProCr.setAttribute("style", "display:none");
 
     let aside = document.querySelector(".aside");
     aside.setAttribute("style", "display:none");
@@ -161,46 +161,47 @@ function vistaUsuarioLogeado() {
     console.log(`Usuario logeado ${usuarioLogeado._nombreUsuario}`);
 }
 
-function cargarCantProduUsu()
-{
+function cargarCantProduUsu() {
     /** Obtenemos los productos del carrrito del local Storage y hacemos un conteno de los 
      * producto del usuario logeado, para luego editar su valor 
      */
 
     cargarCarrito()
-    
-    let ca=listaProductoCarrito.reduce((acc,ele)=>{ 
-        
-        if(ele._idUsuario===usuarioLogeado._id)
-        {
-            acc+=parseInt(ele._cantidad);
+
+    let ca = listaProductoCarrito.reduce((acc, ele) => {
+
+        if (ele._idUsuario === usuarioLogeado._id) {
+            acc += parseInt(ele._cantidad);
         }
 
         return acc;
-    },0)
-    
-    cantProCr.innerText=ca;
+    }, 0)
+
+    cantProCr.innerText = ca;
 }
 
 function vistaUsuario(element, secProductos) {
     let divProducto = document.createElement("div");
-    divProducto.classList.add("producto")
+    divProducto.classList.add("cardContePro")
 
     let divImg = document.createElement("div");
-    divImg.classList.add("imgProducto");
+    divImg.classList.add("cardContImg");
 
     let img = document.createElement("img");
     img.setAttribute("alt", "imgProducto");
     img.setAttribute("src", element._urlImg);
 
     let divInfoPro = document.createElement("div");
-    divInfoPro.classList.add("infoProducto");
-    divInfoPro.innerHTML = `<p>${element._descripcion}</p>
-                            <strong>$${element._precio}</strong>
-                            <strong>Disponible ${element._stock || "sin stock"}</strong>`;
+    divInfoPro.classList.add("cardInfo");
+    divInfoPro.innerHTML = `<p>${element._descripcion}</p>`;
+
+    let divInfoFooter = document.createElement("div");
+    divInfoFooter.classList.add("cardInfoFooter");
+    divInfoFooter.innerHTML = ` <strong>$${element._precio}</strong>
+                                <strong>Disponible ${element._stock || "sin stock"}</strong>`
 
     let btn = document.createElement("button");
-    btn.classList.add("agregarCarrito");
+    btn.classList.add("btnPrimario");
     btn.innerText = "Agregar";
 
     element._stock || btn.setAttribute("style", "display:none")
@@ -210,9 +211,9 @@ function vistaUsuario(element, secProductos) {
     });
 
 
-    divInfoPro.appendChild(btn);
+    divInfoFooter.append(btn);
     divImg.appendChild(img);
-    divProducto.append(divImg, divInfoPro);
+    divProducto.append(divImg, divInfoPro,divInfoFooter);
     secProductos.append(divProducto);
 }
 
@@ -223,17 +224,8 @@ function vistaAdmin(element, secProductos) {
 
     divProducto.innerHTML = `<label for="">
                             ID
-                            <input type="text" value="${element._id}" readonly>        
+                            <input type="text" value="${element._id}" readonly disabled>        
                             </label>`;
-
-    let labelNomPro = document.createElement("label");
-    labelNomPro.innerText = "Nombre Producto";
-    labelNomPro.setAttribute("for", "nombreProducto");
-
-    let inputNomPro = document.createElement("input");
-    inputNomPro.setAttribute("type", "text");
-    inputNomPro.setAttribute("id", "nombreProducto");
-    inputNomPro.setAttribute("value", element._nombreProducto);
 
     let labelDesPro = document.createElement("label");
     labelDesPro.innerText = "Descripción";
@@ -278,12 +270,11 @@ function vistaAdmin(element, secProductos) {
         actualizarProducto(element, inputStoPro.value, inputNomPro.value, inputPrePro.value, texArDesPro.value, inputCatPro.value);
     });
 
-    labelNomPro.append(inputNomPro);
     labelDesPro.append(texArDesPro);
     labelCatPro.append(inputCatPro);
     labelPrePro.append(inputPrePro);
     labelStoPro.append(inputStoPro);
-    divProducto.append(labelNomPro, labelDesPro, labelCatPro, labelPrePro, labelStoPro, btActualizar);
+    divProducto.append(labelDesPro, labelCatPro, labelPrePro, labelStoPro, btActualizar);
     secProductos.append(divProducto);
 
 }
@@ -306,22 +297,20 @@ function actualizarProducto(element, nStock, nNombrePro, nPrecio, nDescr, nCateg
     localStorage.setItem("Productos", JSON.stringify(listaProductos));
 }
 
-async function obtenerUsuJson()
-{
-    let response= await fetch("/datos/usuarios.json")
-    let listaObjUsu= await response.json();
-    listaObjUsu.forEach(us=>{
-        listaUsuarios.push(new Usuario(us.id,us.nombreUsuario,us.contrasenia,us.mai))
+async function obtenerUsuJson() {
+    let response = await fetch("/datos/usuarios.json")
+    let listaObjUsu = await response.json();
+    listaObjUsu.forEach(us => {
+        listaUsuarios.push(new Usuario(us.id, us.nombreUsuario, us.contrasenia, us.mai))
     })
     localStorage.setItem("Usuarios", JSON.stringify(listaUsuarios))
 }
 
-function obtenerProJson()
-{
-    return new Promise((resolve,reject)=>{
+function obtenerProJson() {
+    return new Promise((resolve, reject) => {
         fetch("/datos/productos.json")
-        .then(res=>res.json())
-        .then(data=>resolve(data))
+            .then(res => res.json())
+            .then(data => resolve(data))
     })
 }
 

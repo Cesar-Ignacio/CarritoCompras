@@ -1,36 +1,8 @@
 @import "utilitis/variable";
 @import "bas/reset";
-
+@import "componentes/botones";
 @import "layout/header";
-@import "layout/aside";
 @import "layout/mainProducto";
+@import "layout/aside";
 @import "layout/mainRegistrar";
-
-
-/** Carrito*/
-.detalleCarrito{
-    border: solid black 1px;
-    background-color: blueviolet;
-}
-.productosComprados{
-    margin-top: 0.5em;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-}
-.productoCarrito{
-    border: red solid 1px;
-    
-}
-.imgProCarrito{
-    border: solid 1px yellow;
-    width: 15rem;
-}
-.imgProCarrito img{
-    width: 100%;
-}
-.infoProCarrito{
-   
-    display: flex;
-    flex-direction: column;
-}
+@import "layout/mainCarrito";
