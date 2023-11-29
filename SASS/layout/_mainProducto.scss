@@ -1,59 +1,22 @@
 .main{
-    margin-top: 1em;
-    padding: 0.2em;
     border: 1px rgb(62, 47, 47) solid;
+    padding: 0.2em;
     display: flex;
     justify-content: center;
     gap: 1rem;
 }
 
 .cuerpoMain{
-   //border: solid red 1px;
+    //border: solid red 1px;
     width: 80%;
     font-family: $fuentePrimaria;
 }
 
 .productos{
+    //border: solid red 1px;
     padding: 0.5em;
     display: grid;
     grid-template-columns:1fr 1fr 1fr;
     gap: 0.5em;
 }
 
-.cardContePro{
-    //border: rgb(255, 0, 179) solid 1px;
-    box-shadow: 0px 0px 1rem 0rem rgb(126, 113, 126);
-    border-radius: 0.2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.cardContImg{
-    //border: blue 1px solid;
-    width: 90%;
-    overflow: hidden;
-    img{
-        width: 100%;
-        transition: all ease-in-out 0.5s;
-        &:hover{
-            transform: scale(1.02);
-        }
-    }
-    
-}
-
-.cardInfo{
-    width: 100%;
-    //border: rgb(60, 255, 0) solid 1px;
-    display: flex;
-}
-
-.cardInfoFooter{
-    width: 100%;
-    //border: rebeccapurple solid 2px;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    padding-bottom: 0.2em;
-}

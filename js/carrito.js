@@ -33,7 +33,7 @@ function cargarProductoDeUsuario() {
         return acc;
     }, {});
 
-    cantProCr.innerText=cantidad?? 0;
+    cantProCr.innerText = cantidad ?? 0;
     cantidadPro.innerText = cantidad ?? 0;
     totalFinal.innerText = total ?? 0;
 
@@ -41,7 +41,7 @@ function cargarProductoDeUsuario() {
 }
 
 function renderizarProductosCarrito(productos) {
-   
+
     let secProductosCarrito = document.querySelector(".productosComprados");
     secProductosCarrito.innerHTML = " ";
 
@@ -53,19 +53,27 @@ function renderizarProductosCarrito(productos) {
         let { _stock: stockProducto } = listaProductos.find((ele) => ele._id === element._id);
 
         let divPro = document.createElement("div");
-        divPro.classList.add("productoCarrito");
+        divPro.classList.add("cardConteProCarr");
 
         let divImgPro = document.createElement("div")
         divImgPro.classList.add("imgProCarrito");
 
         let imgPro = document.createElement("img");
         imgPro.setAttribute("alt", "imgProductoCarrito");
-        imgPro.setAttribute("src",element._urlImg);
+        imgPro.setAttribute("src", element._urlImg);
+
         let divInfoPro = document.createElement("div");
-        divInfoPro.classList.add("infoProCarrito");
-        divInfoPro.innerHTML = `<strong>${element._descripcion}</strong>
-                              <strong>P.U $${element._precioUnidad}</strong> 
-                              <strong>Total $${element._total}</strong>`;
+        divInfoPro.classList.add("cardinfoProCarrito");
+        divInfoPro.innerHTML = `<strong>${element._descripcion}</strong>`;
+
+        let divPrecio = document.createElement("div");
+        divPrecio.classList.add("cardPrecioTotal")
+        divPrecio.innerHTML = `<strong>P.U $${element._precioUnidad}</strong> 
+                                <strong>Total $${element._total}</strong>`
+
+        let divCantidad=document.createElement("div");
+        divCantidad.classList.add("cardCantidadProductos")
+
         let inputCantiPro = document.createElement("input");
         inputCantiPro.setAttribute("type", "number");
         inputCantiPro.setAttribute("pattern", "^[0-9]+");
@@ -76,10 +84,12 @@ function renderizarProductosCarrito(productos) {
         inputCantiPro.addEventListener("change", ({ target: { value } }) => {
             cambiarCantidadProducto(element._id, value);
         });
+
         let cantidDisp = document.createElement("strong");
         cantidDisp.innerText = `${stockProducto} disponibles`;
 
-        let btnEliminar = document.createElement("button");
+        let btnEliminar = document.createElement("a");
+        btnEliminar.setAttribute("href","#")
         btnEliminar.classList.add("eliminarProducto");
         btnEliminar.innerText = "Eliminar";
 
@@ -88,8 +98,11 @@ function renderizarProductosCarrito(productos) {
             eleminarProducto(element._id);
         });
 
+        
         divImgPro.append(imgPro);
-        divPro.append(divImgPro, divInfoPro, inputCantiPro, cantidDisp, btnEliminar);
+        divInfoPro.append(btnEliminar);
+        divCantidad.append(inputCantiPro,cantidDisp);
+        divPro.append(divImgPro, divInfoPro,divCantidad,divPrecio);
         secProductosCarrito.append(divPro);
 
     });
@@ -202,6 +215,6 @@ btnFinalizarComprar.addEventListener("click", () => {
     });
 
     localStorage.setItem("Productos", JSON.stringify(listaProductos));
-    
+
     vaciarCarrito();
 });

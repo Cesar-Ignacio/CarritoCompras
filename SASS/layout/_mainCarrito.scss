@@ -1,26 +1,63 @@
-.detalleCarrito{
-    border: solid black 1px;
-    background-color: blueviolet;
+.detalleCarrito {
+    border-radius:0.2rem;
+    line-height: 2rem;
+    padding: 0.5em;
+    margin-top: 0.5rem;
+    background-color: #DCD9D4;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%), radial-gradient(at 50% 0%, rgba(255, 255, 255, 0.10) 0%, rgba(0, 0, 0, 0.50) 50%);
+    background-blend-mode: soft-light, screen;
 }
-.productosComprados{
+
+.productosComprados {
     margin-top: 0.5em;
     display: flex;
     flex-direction: column;
     gap: 0.5em;
 }
-.productoCarrito{
-    border: red solid 1px;
+
+.cardConteProCarr {
+    border-bottom-style: solid;
+
+    border-bottom-width: 5px;
+  
+    border-image: radial-gradient(rgb(13, 3, 155), white) 1;
+    display: flex;
+    width: fit-content;
     
 }
-.imgProCarrito{
-    border: solid 1px yellow;
-    width: 15rem;
+
+.imgProCarrito {
+    //border: solid 1px yellow;
+    width: 10rem;
 }
-.imgProCarrito img{
+
+.imgProCarrito img {
     width: 100%;
 }
-.infoProCarrito{
-   
+
+.cardinfoProCarrito {
+    //border: solid green 1px ;
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
+    width: 20rem;
+}
+
+.cardCantidadProductos{
+    //border: yellow solid 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.cardPrecioTotal{
+    //border: red solid 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: 2rem;
 }

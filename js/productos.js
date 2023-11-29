@@ -267,7 +267,7 @@ function vistaAdmin(element, secProductos) {
     btActualizar.innerText = "Editar";
 
     btActualizar.addEventListener("click", () => {
-        actualizarProducto(element, inputStoPro.value, inputNomPro.value, inputPrePro.value, texArDesPro.value, inputCatPro.value);
+        actualizarProducto(element, inputStoPro.value, inputPrePro.value, texArDesPro.value, inputCatPro.value);
     });
 
     labelDesPro.append(texArDesPro);
@@ -279,9 +279,9 @@ function vistaAdmin(element, secProductos) {
 
 }
 
-function actualizarProducto(element, nStock, nNombrePro, nPrecio, nDescr, nCategoria) {
+function actualizarProducto(element, nStock, nPrecio, nDescr, nCategoria) {
     listaProductos = listaProductos.map((ele) => {
-        (ele._id === element._id) && (ele._stock = parseInt(nStock), ele._nombreProducto = nNombrePro, ele._precio = parseInt(nPrecio),
+        (ele._id === element._id) && (ele._stock = parseInt(nStock), ele._precio = parseInt(nPrecio),
             ele._descripcion = nDescr, ele._categoria = nCategoria);
         return ele;
     });
