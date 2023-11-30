@@ -75,18 +75,18 @@ function renderizarProductos(productos) {
 
     let secProductos = document.querySelector(".main .productos")
     let dataListMarca = document.createElement("datalist");
-    dataListMarca.setAttribute("id","listaMarcas");
-    let dataListaCatego=document.createElement("datalist");
-    dataListaCatego.setAttribute("id","listaCategoria");
+    dataListMarca.setAttribute("id", "listaMarcas");
+    let dataListaCatego = document.createElement("datalist");
+    dataListaCatego.setAttribute("id", "listaCategoria");
     secProductos.innerHTML = "";
     productos.forEach(element => {
 
         /**
          * Si el usuario es admin se mostrará 'vistaAdmin', caso contrario ´vistaUsuario´
          */
-        (usuarioLogeado?._id === 101) ? vistaAdmin(element, secProductos,dataListMarca,dataListaCatego) : vistaUsuario(element, secProductos);
+        (usuarioLogeado?._id === 101) ? vistaAdmin(element, secProductos, dataListMarca, dataListaCatego) : vistaUsuario(element, secProductos);
     });
-    
+
     secProductos.append(dataListMarca);
     secProductos.append(dataListaCatego);
 }
@@ -221,16 +221,16 @@ function vistaUsuario(element, secProductos) {
     secProductos.append(divProducto);
 }
 
-function vistaAdmin(element, secProductos,datalistMarca,dataListaCatego) {
+function vistaAdmin(element, secProductos, datalistMarca, dataListaCatego) {
 
     let divProducto = document.createElement("div");
     divProducto.classList.add("cardContePro");
 
-    let opcMarca=document.createElement("option");
-    opcMarca.setAttribute("value",element._marca);
+    let opcMarca = document.createElement("option");
+    opcMarca.setAttribute("value", element._marca);
 
-    let opcCate=document.createElement("option");
-    opcCate.setAttribute("value",element._categoria);
+    let opcCate = document.createElement("option");
+    opcCate.setAttribute("value", element._categoria);
 
     divProducto.innerHTML = `<label for="">
                             ID
@@ -246,9 +246,9 @@ function vistaAdmin(element, secProductos,datalistMarca,dataListaCatego) {
     texArDesPro.setAttribute("id", "descripcionProducto");
     texArDesPro.innerText = element._descripcion;
 
-    texArDesPro.addEventListener("keyup",(e)=>{
-        texArDesPro.setAttribute("style",`height:${e.target.scrollHeight}px`)
-        
+    texArDesPro.addEventListener("keyup", (e) => {
+        texArDesPro.setAttribute("style", `height:${e.target.scrollHeight}px`)
+
     })
 
     let labelMarca = document.createElement("label");
@@ -270,7 +270,7 @@ function vistaAdmin(element, secProductos,datalistMarca,dataListaCatego) {
 
     let inputCatPro = document.createElement("input");
     inputCatPro.setAttribute("type", "text");
-    inputCatPro.setAttribute("list","listaCategoria");
+    inputCatPro.setAttribute("list", "listaCategoria");
     inputCatPro.setAttribute("id", "categoriaProducto");
     inputCatPro.setAttribute("value", element._categoria);
 
@@ -284,6 +284,10 @@ function vistaAdmin(element, secProductos,datalistMarca,dataListaCatego) {
     inputPrePro.setAttribute("id", "precioProducto");
     inputPrePro.setAttribute("value", element._precio);
 
+    inputPrePro.addEventListener("keypress", (e) => {
+        exprNum.test(e.key) || e.preventDefault();
+    })
+
     let labelStoPro = document.createElement("label");
     labelStoPro.classList.add("cardInfoLabel");
     labelStoPro.innerText = "Stock";
@@ -293,6 +297,10 @@ function vistaAdmin(element, secProductos,datalistMarca,dataListaCatego) {
     inputStoPro.setAttribute("type", "text");
     inputStoPro.setAttribute("id", "stockProducto");
     inputStoPro.setAttribute("value", element._stock);
+
+    inputStoPro.addEventListener("keypress", (e) => {
+        exprNum.test(e.key) || e.preventDefault();
+    })
 
     let btActualizar = document.createElement("button");
     btActualizar.classList.add("btnPrimario")
