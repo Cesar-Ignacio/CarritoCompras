@@ -358,8 +358,6 @@ function obtenerProJson() {
     })
 }
 
-
-
 /**EVENTOS */
 aCerrarSesseion.addEventListener("click", () => {
     localStorage.removeItem("usuarioLogeado");

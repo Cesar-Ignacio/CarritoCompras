@@ -7,6 +7,7 @@ let inputEmail = document.querySelector("#mailUsuario");
 let inputNombUsu = document.querySelector("#nombreUsuario");
 let inputPassUsu = document.querySelector("#passUsuario");
 
+
 /**Main */
 document.addEventListener("DOMContentLoaded", () => {
    
@@ -81,4 +82,6 @@ inputPassUsu.addEventListener("keypress", (e) => {
     // La contaseña no puede tener espacios
     (e.keyCode === 32) && (e.preventDefault())
 })
+
+
 
