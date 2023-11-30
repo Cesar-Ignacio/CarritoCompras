@@ -8,6 +8,7 @@ let listaProductoCarrito = [];
 
 let inputBuscar = document.querySelector("#buscarProducto");
 let selCategoria = document.querySelector("#categoriaProducto");
+let selecMarca=document.querySelector("#marcaProducto");
 
 /** MAIN */
 
@@ -15,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     obtenerProJson().then(res => {
         res.forEach(producto => {
-            listaProductos.push(new Producto(producto.id, producto.categoria, producto.descripcion, producto.precio, producto.stock, producto.url));
+            listaProductos.push(new Producto(producto.id, producto.categoria, producto.descripcion,producto.marca, producto.precio, producto.stock, producto.url));
         })
         cargarProductos();
         renderizarProductos(listaProductos);
@@ -82,8 +83,6 @@ function renderizarProductos(productos) {
          * Si el usuario es admin se mostrará 'vistaAdmin', caso contrario ´vistaUsuario´
          */
         (usuarioLogeado?._id === 101) ? vistaAdmin(element, secProductos) : vistaUsuario(element, secProductos);
-
-
     });
 }
 
@@ -327,5 +326,9 @@ inputBuscar.addEventListener("keyup", ({ target: { value } }) => {
 });
 
 selCategoria.addEventListener("click", ({ target: { value } }) => {
-    renderizarProductos(listaProductos.filter((ele) => ele._categoria.toUpperCase().includes(value.toUpperCase())))
+    renderizarProductos(listaProductos.filter((ele) => ele._categoria.toUpperCase().includes(value.toUpperCase())));
 });
+
+selecMarca.addEventListener("click",({target:{value}})=>{
+    renderizarProductos(listaProductos.filter(pro=>pro._marca.toUpperCase().includes(value.toUpperCase())));
+})

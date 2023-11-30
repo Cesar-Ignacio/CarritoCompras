@@ -57,7 +57,7 @@ btnGuardar.addEventListener("click", (e) => {
             title: `Bienvenido ${inputNombUsu.value}`,
             icon: "info",
             html: `
-            Ya cuentas con un usuario y puedes iniciar sección ahora mismo,
+            Ya cuentas con un usuario y puedes iniciar sesión ahora mismo,
             <a href="/pages/login.html">login</a>
              `,
              showCloseButton: true,
@@ -81,3 +81,4 @@ inputPassUsu.addEventListener("keypress", (e) => {
     // La contaseña no puede tener espacios
     (e.keyCode === 32) && (e.preventDefault())
 })
+

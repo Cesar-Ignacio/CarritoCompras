@@ -1,5 +1,5 @@
 .header{
-    background: #0f0c29;  /* fallback for old browsers */
+    background: #333244;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
     font-family: $fuentePrimaria;
@@ -46,12 +46,28 @@
         color: #0f0c29;
         padding: 0.5em 0.4em ;
         font-family:$fuentePrimaria;
+        display: flex;
+        gap: 1rem;
         .buscador{
-            border: solid #0f0c29  1px;
-            font-size: 1.5rem;
-            padding: 0.2em 0em 0.1em 0.5em;
-            border-radius: 5rem;
+           // border: red solid 1px;
+            position: relative;
+            display: flex;
+            align-items: center;
+           
+            .inputBuscador{
+                border-radius: 2rem;
+                border: solid #0f0c29  1px;
+                font-size: 1.5rem;
+                padding: 0.1em 0em 0.1em 1.2em;   
+            }
+            svg{
+                fill: #2714cf;
+                width: 1.2rem;
+                position:absolute;
+                left: 8px;
+            }
         }
+        
         .selector{
             font-size: 1.2rem;
         }

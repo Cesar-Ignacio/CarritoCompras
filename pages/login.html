@@ -5,26 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="stylesheet" href="/CSS/style.css">
 </head>
 
 <body>
-    <main>
+    <main class="mainLogin">
         <h1>Buy Tech</h1>
-        <form action="">
+        <form action="" class="formLogin">
             <h2>Login</h2>
-            <label for="nombreUsuario">Nombre Usuario
+            <label for="nombreUsuario" class="inputLogin">Nombre Usuario
                 <input type="text" id="nombreUsuario">
             </label>
             
-            <label for="contraseniaUsuaria">Contraseña
+            <label for="contraseniaUsuaria" class="inputLogin">Contraseña
                 <input type="password" id="contraseniaUsuaria">
             </label>
 
-            <button id="btnLogin" >Login</button>
+            <button id="btnLogin" class="btnPrimario" >Login</button>
         </form>
         <p class="mensajeError"></p>
     </main>
+
     <script src="/js/login.js" ></script>
 
 </body>

@@ -10,7 +10,11 @@
   border: none;
   padding: 0.5em;
   border-radius: 0.2rem;
-  color: white; }
+  color: white;
+  transition: all linear 0.2s; }
+  .btnPrimario:hover {
+    color: black;
+    background-color: #7a7e7e; }
 
 .cardContePro {
   box-shadow: 0px 0px 1rem 0rem #7e717e;
@@ -41,7 +45,7 @@
   padding-bottom: 0.2em; }
 
 .header {
-  background: #0f0c29;
+  background: #333244;
   /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);
   /* Chrome 10-25, Safari 5.1-6 */
@@ -81,12 +85,23 @@
   background-color: white;
   color: #0f0c29;
   padding: 0.5em 0.4em;
-  font-family: "Josefin Sans", sans-serif; }
+  font-family: "Josefin Sans", sans-serif;
+  display: flex;
+  gap: 1rem; }
   .nav .buscardorFiltros .buscador {
-    border: solid #0f0c29  1px;
-    font-size: 1.5rem;
-    padding: 0.2em 0em 0.1em 0.5em;
-    border-radius: 5rem; }
+    position: relative;
+    display: flex;
+    align-items: center; }
+    .nav .buscardorFiltros .buscador .inputBuscador {
+      border-radius: 2rem;
+      border: solid #0f0c29  1px;
+      font-size: 1.5rem;
+      padding: 0.1em 0em 0.1em 1.2em; }
+    .nav .buscardorFiltros .buscador svg {
+      fill: #2714cf;
+      width: 1.2rem;
+      position: absolute;
+      left: 8px; }
   .nav .buscardorFiltros .selector {
     font-size: 1.2rem; }
 
@@ -239,3 +254,42 @@
   align-items: center;
   gap: 0.5rem;
   margin-left: 2rem; }
+
+.mainLogin {
+  background: #0f0c29;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  height: 100vh;
+  color: white;
+  font-family: "Josefin Sans", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; }
+
+.formLogin {
+  margin-top: 1rem;
+  width: 20rem;
+  border: white solid 1px;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em;
+  gap: 1rem;
+  text-align: center; }
+  .formLogin .inputLogin {
+    text-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; }
+    .formLogin .inputLogin input {
+      font-size: 1.2rem;
+      border-radius: 0.2rem;
+      border: none;
+      padding: 0.2em; }
+
+.mensajeError {
+  color: red;
+  margin-top: 1rem; }

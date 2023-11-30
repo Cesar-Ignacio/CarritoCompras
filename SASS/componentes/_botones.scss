@@ -4,5 +4,14 @@
     border: none;
     padding: 0.5em;
     border-radius: 0.2rem;
-    color: white;   
+    color: white;
+    transition: all linear 0.2s;
+    
+    &:hover{
+       
+        color: invert($color: white);
+        background-color:invert($color:  rgb(133, 129, 129));
+  
+    }
 }
+

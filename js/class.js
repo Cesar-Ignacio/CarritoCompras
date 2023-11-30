@@ -1,9 +1,10 @@
 /** CLASS */
 class Producto {
-    constructor(id, categoria, descripcion, precio, stock, img) {
+    constructor(id, categoria, descripcion,marca, precio, stock, img) {
         this._id = id;
         this._categoria = categoria;
         this._descripcion = descripcion;
+        this._marca=marca;
         this._precio = precio;
         this._stock = stock;
         this._urlImg = img;
