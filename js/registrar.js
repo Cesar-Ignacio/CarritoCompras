@@ -6,8 +6,7 @@ let inputID = document.querySelector("#idUsuario");
 let inputEmail = document.querySelector("#mailUsuario");
 let inputNombUsu = document.querySelector("#nombreUsuario");
 let inputPassUsu = document.querySelector("#passUsuario");
-let expreMail = /\S+@\S+\.\S+/;
-let expSolLet = /^[A-Za-z]+$/;
+
 /**Main */
 document.addEventListener("DOMContentLoaded", () => {
    

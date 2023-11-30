@@ -47,9 +47,6 @@ function renderizarProductosCarrito(productos) {
 
     productos.forEach(element => {
 
-
-        console.log(element);
-
         let { _stock: stockProducto } = listaProductos.find((ele) => ele._id === element._id);
 
         let divPro = document.createElement("div");
@@ -71,25 +68,45 @@ function renderizarProductosCarrito(productos) {
         divPrecio.innerHTML = `<strong>P.U $${element._precioUnidad}</strong> 
                                 <strong>Total $${element._total}</strong>`
 
-        let divCantidad=document.createElement("div");
+        let divCantidad = document.createElement("div");
         divCantidad.classList.add("cardCantidadProductos")
 
         let inputCantiPro = document.createElement("input");
         inputCantiPro.setAttribute("type", "number");
-        inputCantiPro.setAttribute("pattern", "^[0-9]+");
         inputCantiPro.setAttribute("min", "1");
         inputCantiPro.setAttribute("max", stockProducto);
         inputCantiPro.setAttribute("value", `${element._cantidad}`);
 
-        inputCantiPro.addEventListener("change", ({ target: { value } }) => {
-            cambiarCantidadProducto(element._id, value);
-        });
-
         let cantidDisp = document.createElement("strong");
         cantidDisp.innerText = `${stockProducto} disponibles`;
 
+        inputCantiPro.addEventListener("change", ({ e, target: { value } }) => {
+
+            (value >= 1 && value <= stockProducto) && cambiarCantidadProducto(element._id, value)
+        });
+
+        inputCantiPro.addEventListener("keypress", (e) => {
+
+            exprNum.test(e.key) || e.preventDefault();
+        })
+
+        inputCantiPro.addEventListener("keyup", ({ target: { value } }) => {
+            value > stockProducto ?
+                (cantidDisp.innerText = `Podes comprar hasta ${stockProducto} u`,
+                    cantidDisp.setAttribute("style", "color:red"))
+                : ((value === "" || value === "0") ?
+                    (cantidDisp.innerText = `Puede comprar desde 1 u`,
+                        cantidDisp.setAttribute("style", "color:red")
+                    )
+                    : (cantidDisp.innerText = `${stockProducto} disponible`,
+                        cantidDisp.setAttribute("style", "color:black"),
+                        cambiarCantidadProducto(element._id, value))
+                );
+
+        })
+
         let btnEliminar = document.createElement("a");
-        btnEliminar.setAttribute("href","#")
+        btnEliminar.setAttribute("href", "#")
         btnEliminar.classList.add("eliminarProducto");
         btnEliminar.innerText = "Eliminar";
 
@@ -98,11 +115,11 @@ function renderizarProductosCarrito(productos) {
             eleminarProducto(element._id);
         });
 
-        
+
         divImgPro.append(imgPro);
         divInfoPro.append(btnEliminar);
-        divCantidad.append(inputCantiPro,cantidDisp);
-        divPro.append(divImgPro, divInfoPro,divCantidad,divPrecio);
+        divCantidad.append(inputCantiPro, cantidDisp);
+        divPro.append(divImgPro, divInfoPro, divCantidad, divPrecio);
         secProductosCarrito.append(divPro);
 
     });
@@ -202,19 +219,37 @@ btnLimpiarCarrito.addEventListener("click", () => {
 btnFinalizarComprar.addEventListener("click", () => {
 
     /**
+     * Verificamos que no existan campos en blanco o incorrectos
      * Recorremos los todos los productos.
      * Verificamos que productos tiene el usuario.
      * Si se encuentra el producto se restara al stock la cantidad a comprar de dicho producto.
      */
+    let inputCantidad = document.querySelectorAll(".cardCantidadProductos input");
 
-    listaProductos = listaProductos.map((element) => {
-
-        let proUsu = productUsu.find((ele) => ele._id === element._id);
-        (proUsu !== undefined) && (element._stock -= proUsu._cantidad);
-        return element;
+    let estado = true;
+    inputCantidad.forEach(({ value }) => {
+        (value === "" || value === "0") && (estado = false)
     });
 
-    localStorage.setItem("Productos", JSON.stringify(listaProductos));
+    (estado) ?
+        (listaProductos = listaProductos.map((element) => {
+            let proUsu = productUsu.find((ele) => ele._id === element._id);
+            (proUsu !== undefined) && (element._stock -= proUsu._cantidad);
+            return element;
+        }),
 
-    vaciarCarrito();
+            localStorage.setItem("Productos", JSON.stringify(listaProductos)),
+            vaciarCarrito(),
+            Swal.fire({
+                title: "Filicitaciones",
+                text: "Gracias por comprar en Buy Tech",
+                icon: "success"
+              }))
+        : (
+            Swal.fire({
+                icon: "error",
+                text: "Por favor complete los campos con valores validos!",
+              })
+        )
+   
 });
