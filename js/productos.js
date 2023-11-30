@@ -8,7 +8,7 @@ let listaProductoCarrito = [];
 
 let inputBuscar = document.querySelector("#buscarProducto");
 let selCategoria = document.querySelector("#categoriaProducto");
-let selecMarca=document.querySelector("#marcaProducto");
+let selecMarca = document.querySelector("#marcaProducto");
 
 /** MAIN */
 
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     obtenerProJson().then(res => {
         res.forEach(producto => {
-            listaProductos.push(new Producto(producto.id, producto.categoria, producto.descripcion,producto.marca, producto.precio, producto.stock, producto.url));
+            listaProductos.push(new Producto(producto.id, producto.categoria, producto.descripcion, producto.marca, producto.precio, producto.stock, producto.url));
         })
         cargarProductos();
         renderizarProductos(listaProductos);
@@ -74,16 +74,21 @@ function renderizarProductos(productos) {
      */
 
     let secProductos = document.querySelector(".main .productos")
-
+    let dataListMarca = document.createElement("datalist");
+    dataListMarca.setAttribute("id","listaMarcas");
+    let dataListaCatego=document.createElement("datalist");
+    dataListaCatego.setAttribute("id","listaCategoria");
     secProductos.innerHTML = "";
-
     productos.forEach(element => {
 
         /**
          * Si el usuario es admin se mostrará 'vistaAdmin', caso contrario ´vistaUsuario´
          */
-        (usuarioLogeado?._id === 101) ? vistaAdmin(element, secProductos) : vistaUsuario(element, secProductos);
+        (usuarioLogeado?._id === 101) ? vistaAdmin(element, secProductos,dataListMarca,dataListaCatego) : vistaUsuario(element, secProductos);
     });
+    
+    secProductos.append(dataListMarca);
+    secProductos.append(dataListaCatego);
 }
 
 function cargarProductos() {
@@ -212,14 +217,20 @@ function vistaUsuario(element, secProductos) {
 
     divInfoFooter.append(btn);
     divImg.appendChild(img);
-    divProducto.append(divImg, divInfoPro,divInfoFooter);
+    divProducto.append(divImg, divInfoPro, divInfoFooter);
     secProductos.append(divProducto);
 }
 
-function vistaAdmin(element, secProductos) {
+function vistaAdmin(element, secProductos,datalistMarca,dataListaCatego) {
 
     let divProducto = document.createElement("div");
-    divProducto.classList.add("producto");
+    divProducto.classList.add("cardContePro");
+
+    let opcMarca=document.createElement("option");
+    opcMarca.setAttribute("value",element._marca);
+
+    let opcCate=document.createElement("option");
+    opcCate.setAttribute("value",element._categoria);
 
     divProducto.innerHTML = `<label for="">
                             ID
@@ -227,6 +238,7 @@ function vistaAdmin(element, secProductos) {
                             </label>`;
 
     let labelDesPro = document.createElement("label");
+    labelDesPro.classList.add("cardInfoLabel");
     labelDesPro.innerText = "Descripción";
     labelDesPro.setAttribute("for", "descripcionProducto");
 
@@ -234,16 +246,36 @@ function vistaAdmin(element, secProductos) {
     texArDesPro.setAttribute("id", "descripcionProducto");
     texArDesPro.innerText = element._descripcion;
 
+    texArDesPro.addEventListener("keyup",(e)=>{
+        texArDesPro.setAttribute("style",`height:${e.target.scrollHeight}px`)
+        
+    })
+
+    let labelMarca = document.createElement("label");
+    labelMarca.classList.add("cardInfoLabel");
+    labelMarca.innerText = "Marca";
+    labelMarca.setAttribute("for", "marcaProducto")
+
+    let inputMarca = document.createElement("input");
+    inputMarca.setAttribute("type", "text");
+    inputMarca.setAttribute("list", "listaMarcas");
+    inputMarca.setAttribute("value", element._marca)
+    inputMarca.setAttribute("id", "marcaProducto");
+
+
     let labelCatPro = document.createElement("label");
+    labelCatPro.classList.add("cardInfoLabel")
     labelCatPro.innerText = "Categoría";
     labelCatPro.setAttribute("for", "categoriaProducto");
 
     let inputCatPro = document.createElement("input");
     inputCatPro.setAttribute("type", "text");
+    inputCatPro.setAttribute("list","listaCategoria");
     inputCatPro.setAttribute("id", "categoriaProducto");
     inputCatPro.setAttribute("value", element._categoria);
 
     let labelPrePro = document.createElement("label");
+    labelPrePro.classList.add("cardInfoLabel");
     labelPrePro.innerText = "Precio";
     labelPrePro.setAttribute("for", "precioProducto");
 
@@ -253,6 +285,7 @@ function vistaAdmin(element, secProductos) {
     inputPrePro.setAttribute("value", element._precio);
 
     let labelStoPro = document.createElement("label");
+    labelStoPro.classList.add("cardInfoLabel");
     labelStoPro.innerText = "Stock";
     labelStoPro.setAttribute("for", "stockProducto");
 
@@ -262,6 +295,7 @@ function vistaAdmin(element, secProductos) {
     inputStoPro.setAttribute("value", element._stock);
 
     let btActualizar = document.createElement("button");
+    btActualizar.classList.add("btnPrimario")
     btActualizar.setAttribute("id", "btnActualizar");
     btActualizar.innerText = "Editar";
 
@@ -269,11 +303,14 @@ function vistaAdmin(element, secProductos) {
         actualizarProducto(element, inputStoPro.value, inputPrePro.value, texArDesPro.value, inputCatPro.value);
     });
 
+    datalistMarca.appendChild(opcMarca);
+    dataListaCatego.appendChild(opcCate);
     labelDesPro.append(texArDesPro);
+    labelMarca.append(inputMarca);
     labelCatPro.append(inputCatPro);
     labelPrePro.append(inputPrePro);
     labelStoPro.append(inputStoPro);
-    divProducto.append(labelDesPro, labelCatPro, labelPrePro, labelStoPro, btActualizar);
+    divProducto.append(labelDesPro, labelMarca, labelCatPro, labelPrePro, labelStoPro, btActualizar);
     secProductos.append(divProducto);
 
 }
@@ -329,6 +366,6 @@ selCategoria.addEventListener("click", ({ target: { value } }) => {
     renderizarProductos(listaProductos.filter((ele) => ele._categoria.toUpperCase().includes(value.toUpperCase())));
 });
 
-selecMarca.addEventListener("click",({target:{value}})=>{
-    renderizarProductos(listaProductos.filter(pro=>pro._marca.toUpperCase().includes(value.toUpperCase())));
+selecMarca.addEventListener("click", ({ target: { value } }) => {
+    renderizarProductos(listaProductos.filter(pro => pro._marca.toUpperCase().includes(value.toUpperCase())));
 })

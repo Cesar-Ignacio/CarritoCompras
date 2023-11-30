@@ -1,0 +1,11 @@
+@mixin resetStyleForm()
+{
+    &:focus{
+        border:solid 1px rgb(4, 0, 255) ;
+        box-shadow: 0px 0px 2px 0px blue;
+        
+    }
+    &::-webkit-scrollbar{
+        width: 0px;
+    }
+}
