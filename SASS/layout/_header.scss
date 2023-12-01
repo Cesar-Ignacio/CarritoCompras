@@ -1,7 +1,11 @@
 .header{
+    // background: #333244;  /* fallback for old browsers */
+    // background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
+    // background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
+   
     background: #333244;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
+    background: linear-gradient(to right,$jacarta-800, $jacarta-600, $jacarta-800); 
+   
     font-family: $fuentePrimaria;
     color: white;
     .logito{
@@ -56,12 +60,12 @@
            
             .inputBuscador{
                 border-radius: 2rem;
-                border: solid #0f0c29  1px;
+                border: solid $jacarta-700  1px;
                 font-size: 1.5rem;
                 padding: 0.1em 0.2em 0.1em 1.2em;   
             }
             svg{
-                fill: #2714cf;
+                fill: $jacarta-950;
                 width: 1.2rem;
                 position:absolute;
                 left: 8px;
@@ -70,6 +74,13 @@
         
         .selector{
             font-size: 1.2rem;
+            color: $jacarta-700;
+            border-color: $jacarta-700;
+            border-radius: 1rem;
+            transition: all linear 0.2s;
+            &:hover{
+                background-color: $jacarta-50;
+            }
         }
     }
 }

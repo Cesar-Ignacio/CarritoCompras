@@ -1,7 +1,11 @@
 .aside {
-    background: #0f0c29;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #3b3b75, #302b63, #19153b);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #444475, #302b63, #1b1641); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */      
+    // background: #0f0c29;  /* fallback for old browsers */
+    // background: -webkit-linear-gradient(to right, #3b3b75, #302b63, #19153b);  /* Chrome 10-25, Safari 5.1-6 */
+    // background: linear-gradient(to right, #444475, #302b63, #1b1641); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */      
+    
+    background: linear-gradient(to top,$jacarta-300,$jacarta-600); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */      
+
+
     border-radius: 0.3rem;
     font-family: $fuentePrimaria;
     text-align: center;

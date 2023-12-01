@@ -1,6 +1,7 @@
 .btnPrimario{
     font-family: $fuentePrimaria;
-    background-color: rgb(36, 30, 30);
+    //background-color: rgb(36, 30, 30);
+   background-color: $jacarta-500;
     border: none;
     padding: 0.5em;
     border-radius: 0.2rem;
@@ -8,9 +9,9 @@
     transition: all linear 0.2s;
     
     &:hover{
-       
-        color: invert($color: white);
-        background-color:invert($color:  rgb(133, 129, 129));
+       background-color: $jacarta-600;
+        //color: invert($color: white);
+        //background-color:invert($color:  rgb(133, 129, 129));
   
     }
 }

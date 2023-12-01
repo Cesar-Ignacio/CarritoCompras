@@ -1,9 +1,10 @@
 @mixin resetStyleForm()
 {
     &:focus{
-        border:solid 1px rgb(4, 0, 255) ;
-        box-shadow: 0px 0px 2px 0px blue;
-        
+        border:solid 1px $jacarta-700 ;
+        box-shadow: 0px 0px 2px 0px $jacarta-950;
+        color: $jacarta-700;
+        background-color: $jacarta-100;
     }
     &::-webkit-scrollbar{
         width: 0px;

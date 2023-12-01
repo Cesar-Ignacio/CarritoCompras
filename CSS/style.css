@@ -6,15 +6,14 @@
 
 .btnPrimario {
   font-family: "Josefin Sans", sans-serif;
-  background-color: #241e1e;
+  background-color: #5f63d2;
   border: none;
   padding: 0.5em;
   border-radius: 0.2rem;
   color: white;
   transition: all linear 0.2s; }
   .btnPrimario:hover {
-    color: black;
-    background-color: #7a7e7e; }
+    background-color: #504bc5; }
 
 .cardContePro {
   box-shadow: 0px 0px 1rem 0rem #7e717e;
@@ -50,8 +49,10 @@
     outline: none;
     padding: 0.2em; }
     .cardInfoLabel textarea:focus {
-      border: solid 1px #0400ff;
-      box-shadow: 0px 0px 2px 0px blue; }
+      border: solid 1px #4b41b4;
+      box-shadow: 0px 0px 2px 0px #282348;
+      color: #4b41b4;
+      background-color: #e2e4f7; }
     .cardInfoLabel textarea::-webkit-scrollbar {
       width: 0px; }
   .cardInfoLabel input {
@@ -59,8 +60,10 @@
     border-width: 1px;
     padding: 0.2em; }
     .cardInfoLabel input:focus {
-      border: solid 1px #0400ff;
-      box-shadow: 0px 0px 2px 0px blue; }
+      border: solid 1px #4b41b4;
+      box-shadow: 0px 0px 2px 0px #282348;
+      color: #4b41b4;
+      background-color: #e2e4f7; }
     .cardInfoLabel input::-webkit-scrollbar {
       width: 0px; }
 
@@ -70,13 +73,44 @@
   justify-content: space-evenly;
   align-items: center; }
 
+/**carrito*/
+.cardConteProCarr {
+  border-bottom-style: solid;
+  border-bottom-width: 5px;
+  border-image: radial-gradient(#443a93, white) 1;
+  display: flex;
+  width: fit-content; }
+
+.imgProCarrito {
+  width: 10rem; }
+  .imgProCarrito img {
+    width: 100%; }
+
+.cardinfoProCarrito {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 20rem; }
+
+.cardCantidadProductos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; }
+
+.cardPrecioTotal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 2rem; }
+
 .header {
   background: #333244;
   /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right, #443a93, #504bc5, #443a93);
   font-family: "Josefin Sans", sans-serif;
   color: white; }
   .header .logito {
@@ -120,16 +154,22 @@
     align-items: center; }
     .nav .buscardorFiltros .buscador .inputBuscador {
       border-radius: 2rem;
-      border: solid #0f0c29  1px;
+      border: solid #4b41b4 1px;
       font-size: 1.5rem;
       padding: 0.1em 0.2em 0.1em 1.2em; }
     .nav .buscardorFiltros .buscador svg {
-      fill: #2714cf;
+      fill: #282348;
       width: 1.2rem;
       position: absolute;
       left: 8px; }
   .nav .buscardorFiltros .selector {
-    font-size: 1.2rem; }
+    font-size: 1.2rem;
+    color: #4b41b4;
+    border-color: #4b41b4;
+    border-radius: 1rem;
+    transition: all linear 0.2s; }
+    .nav .buscardorFiltros .selector:hover {
+      background-color: #f2f3fc; }
 
 .main {
   border: 1px #3e2f2f solid;
@@ -148,12 +188,12 @@
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0.5em; }
 
+.disabledInput {
+  color: #4b41b4;
+  border: solid 1px #4b41b4; }
+
 .aside {
-  background: #0f0c29;
-  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #3b3b75, #302b63, #19153b);
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #444475, #302b63, #1b1641);
+  background: linear-gradient(to top, #a7afe9, #504bc5);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border-radius: 0.3rem;
   font-family: "Josefin Sans", sans-serif;
@@ -261,40 +301,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.5em; }
-
-.cardConteProCarr {
-  border-bottom-style: solid;
-  border-bottom-width: 5px;
-  border-image: radial-gradient(#0d039b, white) 1;
-  display: flex;
-  width: fit-content; }
-
-.imgProCarrito {
-  width: 10rem; }
-
-.imgProCarrito img {
-  width: 100%; }
-
-.cardinfoProCarrito {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  width: 20rem; }
-
-.cardCantidadProductos {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem; }
-
-.cardPrecioTotal {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  margin-left: 2rem; }
 
 .mainLogin {
   background: #0f0c29;

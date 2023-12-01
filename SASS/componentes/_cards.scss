@@ -59,3 +59,47 @@
     align-items: center;
     
 }
+
+/**carrito*/
+.cardConteProCarr {
+    border-bottom-style: solid;
+    border-bottom-width: 5px;
+    border-image: radial-gradient($jacarta-800, white) 1;
+    display: flex;
+    width: fit-content;
+}
+
+.imgProCarrito {
+    //border: solid 1px yellow;
+    width: 10rem;
+    img {
+        width: 100%;
+    }
+}
+
+.cardinfoProCarrito {
+    //border: solid green 1px ;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 20rem;
+}
+
+.cardCantidadProductos{
+    //border: yellow solid 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.cardPrecioTotal{
+    //border: red solid 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: 2rem;
+}

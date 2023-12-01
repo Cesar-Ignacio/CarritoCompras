@@ -235,7 +235,7 @@ function vistaAdmin(element, secProductos, datalistMarca, dataListaCatego) {
 
     divProducto.innerHTML = `<label for="">
                             ID
-                            <input type="text" value="${element._id}" readonly disabled>        
+                            <input type="text" value="${element._id}" class="disabledInput" readonly disabled>        
                             </label>`;
 
     let labelDesPro = document.createElement("label");
