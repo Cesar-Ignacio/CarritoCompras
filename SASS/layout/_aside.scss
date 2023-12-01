@@ -19,7 +19,10 @@
     margin: 0.5rem 0 0 0.5rem;
     color: white;
     a{  
-        color: rgb(253, 253, 253);
+        color: $jacarta-500;
+        &:hover{
+            color: $jacarta-800;
+        }
     }
 }
 

@@ -130,6 +130,8 @@
       color: white;
       display: block;
       position: relative; }
+      .nav .navLink li a:hover {
+        color: #bbc56c; }
       .nav .navLink li a svg {
         width: 2rem; }
       .nav .navLink li a strong {
@@ -139,7 +141,8 @@
         border-radius: 50%;
         position: absolute;
         top: -1.2rem;
-        right: -1.2rem; }
+        right: -1.2rem;
+        color: white; }
 
 .nav .buscardorFiltros {
   background-color: white;
@@ -208,7 +211,9 @@
   margin: 0.5rem 0 0 0.5rem;
   color: white; }
   .aside a {
-    color: #fdfdfd; }
+    color: #5f63d2; }
+    .aside a:hover {
+      color: #443a93; }
 
 .imgUsuario {
   border: solid #fffdfd 2px;
@@ -260,7 +265,8 @@
 .formImg {
   display: flex;
   align-items: center;
-  flex-direction: column; }
+  flex-direction: column;
+  gap: 0.5rem; }
   .formImg .contenedorImg {
     width: 10rem;
     height: 10rem; }
@@ -284,8 +290,8 @@
     border-radius: 0.2rem; }
   .formInput p {
     margin-top: 0.4rem;
-    color: red;
-    font-size: 0.8rem; }
+    color: #f50e9c;
+    font-size: 0.9rem; }
 
 .detalleCarrito {
   border-radius: 0.2rem;
@@ -338,5 +344,5 @@
       padding: 0.2em; }
 
 .mensajeError {
-  color: red;
+  color: #f50e9c;
   margin-top: 1rem; }
