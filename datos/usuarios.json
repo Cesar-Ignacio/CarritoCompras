@@ -3,18 +3,21 @@
         "id":101,
         "nombreUsuario":"admin",
         "contrasenia":"admin",
-        "mai":"admin@gamil"
+        "mai":"admin@gamil",
+        "url":"/assets/img/usuario.png"
     },
     {
         "id":102,
         "nombreUsuario":"Cesar",
         "contrasenia":"123",
-        "mai":"cesar@gamil"
+        "mai":"cesar@gamil",
+        "url":"https://picsum.photos/id/91/300/300"
     },
     {
         "id":103,
         "nombreUsuario":"Beto",
         "contrasenia":"147",
-        "mai":"beto@gamil"
+        "mai":"beto@gamil",
+        "url":"https://picsum.photos/id/30/300/300"
     }
 ]

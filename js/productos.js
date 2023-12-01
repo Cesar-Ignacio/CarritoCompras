@@ -157,6 +157,7 @@ function vistaUsuarioLogeado() {
     /** Si mostrará el elemento aside con los datos del usuario logeado*/
 
     cargarCantProduUsu();
+    imgUsur.setAttribute("src", usuarioLogeado._url);
 
     let divInfoUsu = document.querySelector(".informacionUsuario ul")
     divInfoUsu.innerHTML = `<li>${usuarioLogeado._id}</li>
@@ -345,7 +346,7 @@ async function obtenerUsuJson() {
     let response = await fetch("/datos/usuarios.json")
     let listaObjUsu = await response.json();
     listaObjUsu.forEach(us => {
-        listaUsuarios.push(new Usuario(us.id, us.nombreUsuario, us.contrasenia, us.mai))
+        listaUsuarios.push(new Usuario(us.id, us.nombreUsuario, us.contrasenia, us.mai, us.url))
     })
     localStorage.setItem("Usuarios", JSON.stringify(listaUsuarios))
 }

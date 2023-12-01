@@ -165,6 +165,9 @@ function vistaUsuarioNoLogeado() {
 function vistaUsuarioLogeado() {
 
     /** Si mostrará el elemento aside con los datos del usuario logeado*/
+
+    imgUsur.setAttribute("src", usuarioLogeado._url);
+
     let divInfoUsu = document.querySelector(".informacionUsuario ul")
     divInfoUsu.innerHTML = `<li>${usuarioLogeado._id}</li>
                             <li>${usuarioLogeado._nombreUsuario}</li>
@@ -244,12 +247,12 @@ btnFinalizarComprar.addEventListener("click", () => {
                 title: "Filicitaciones",
                 text: "Gracias por comprar en Buy Tech",
                 icon: "success"
-              }))
+            }))
         : (
             Swal.fire({
                 icon: "error",
                 text: "Por favor complete los campos con valores validos!",
-              })
+            })
         )
-   
+
 });

@@ -24,10 +24,11 @@ class Carrito {
     }
 }
 class Usuario {
-    constructor(id, nombreUsuario, contrasenia, mail) {
+    constructor(id, nombreUsuario, contrasenia, mail,url) {
         this._id = id;
         this._nombreUsuario = nombreUsuario;
         this._contrasenia = contrasenia;
         this._mai = mail;
+        this._url=url;
     }
 }
