@@ -5,11 +5,11 @@
 let listaProductos = []
 let listaUsuarios = []
 let listaProductoCarrito = [];
-
+let secProductos = document.querySelector(".main .productos")
 let inputBuscar = document.querySelector("#buscarProducto");
 let selCategoria = document.querySelector("#categoriaProducto");
 let selecMarca = document.querySelector("#marcaProducto");
-
+let btnAddPro=document.querySelector("#btnNuevoProducto");
 /** MAIN */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     cargarUsuarios();
     cargarPerfil();
     cargarCarrito();
-
+    cargaOpcionesAvanzadas();
 });
 
 /** FUNCIONES */
@@ -73,14 +73,14 @@ function renderizarProductos(productos) {
      * Recorre el array productos y lo muestra en html
      */
 
-    let secProductos = document.querySelector(".main .productos")
     let dataListMarca = document.createElement("datalist");
     dataListMarca.setAttribute("id", "listaMarcas");
     let dataListaCatego = document.createElement("datalist");
     dataListaCatego.setAttribute("id", "listaCategoria");
-    secProductos.innerHTML = "";
-    productos.forEach(element => {
 
+    secProductos.innerHTML = "";
+    
+    productos.forEach(element => {
         /**
          * Si el usuario es admin se mostrará 'vistaAdmin', caso contrario ´vistaUsuario´
          */
@@ -99,7 +99,7 @@ function cargarProductos() {
 }
 
 function cargarCarrito() {
-    /** Si no existe el valor carrito se crea local storage, caso 
+    /** Si no existe el valor carrito se crea local storage, caso
      * contrario se actulaliza la variable local*/
     let listCarritoLS = JSON.parse(localStorage.getItem("Carrito")) ?? localStorage.setItem("Carrito", JSON.stringify(listaProductoCarrito));
     (listCarritoLS) ? listaProductoCarrito = listCarritoLS : console.log("ADD Carrito LocalStorage");
@@ -107,7 +107,7 @@ function cargarCarrito() {
 
 function cargarPerfil() {
 
-    /** Si existe un usuario logeado se mostrará la función vistaUsuarioLogeado(), caso contrario se 
+    /** Si existe un usuario logeado se mostrará la función vistaUsuarioLogeado(), caso contrario se
      * mostrará la función vistaUsuarioNoLogeado()
      */
     usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado")) ?? vistaUsuarioNoLogeado();
@@ -117,8 +117,8 @@ function cargarPerfil() {
 
 function cargarUsuarios() {
     /**
-     * Si no existe el valor 'Usuarios' en Local Storage se crea uno con los 
-     * usuarios del archivo json 
+     * Si no existe el valor 'Usuarios' en Local Storage se crea uno con los
+     * usuarios del archivo json
      */
     JSON.parse(localStorage.getItem("Usuarios")) ?? obtenerUsuJson();
 
@@ -167,8 +167,8 @@ function vistaUsuarioLogeado() {
 }
 
 function cargarCantProduUsu() {
-    /** Obtenemos los productos del carrrito del local Storage y hacemos un conteno de los 
-     * producto del usuario logeado, para luego editar su valor 
+    /** Obtenemos los productos del carrrito del local Storage y hacemos un conteno de los
+     * producto del usuario logeado, para luego editar su valor
      */
 
     cargarCarrito()
@@ -224,6 +224,13 @@ function vistaUsuario(element, secProductos) {
 
 function vistaAdmin(element, secProductos, datalistMarca, dataListaCatego) {
 
+    // let opcAdm=document.querySelector("#opcionesAdmin");
+
+    // let btnAddPro=document.createElement("button");
+    // btnAddPro.innerText="+";
+
+    // opcAdm.append(btnAddPro);
+
     let divProducto = document.createElement("div");
     divProducto.classList.add("cardContePro");
 
@@ -235,7 +242,7 @@ function vistaAdmin(element, secProductos, datalistMarca, dataListaCatego) {
 
     divProducto.innerHTML = `<label for="">
                             ID
-                            <input type="text" value="${element._id}" class="disabledInput" readonly disabled>        
+                            <input type="text" value="${element._id}" class="disabledInput" readonly disabled>
                             </label>`;
 
     let labelDesPro = document.createElement("label");
@@ -349,6 +356,7 @@ async function obtenerUsuJson() {
         listaUsuarios.push(new Usuario(us.id, us.nombreUsuario, us.contrasenia, us.mai, us.url))
     })
     localStorage.setItem("Usuarios", JSON.stringify(listaUsuarios))
+
 }
 
 function obtenerProJson() {
@@ -357,6 +365,18 @@ function obtenerProJson() {
             .then(res => res.json())
             .then(data => resolve(data))
     })
+}
+
+function cargaOpcionesAvanzadas()
+{
+   (usuarioLogeado?._id===101)? (btnAddPro.setAttribute("style","display:block")): console.log("error")
+}
+
+function proximoIdProducto()
+{
+    let {_id}=(JSON.parse(localStorage.getItem("Productos"))).pop();
+
+    return _id+1;
 }
 
 /**EVENTOS */
@@ -370,9 +390,136 @@ inputBuscar.addEventListener("keyup", ({ target: { value } }) => {
 });
 
 selCategoria.addEventListener("click", ({ target: { value } }) => {
+ 
     renderizarProductos(listaProductos.filter((ele) => ele._categoria.toUpperCase().includes(value.toUpperCase())));
 });
 
 selecMarca.addEventListener("click", ({ target: { value } }) => {
+    
     renderizarProductos(listaProductos.filter(pro => pro._marca.toUpperCase().includes(value.toUpperCase())));
+})
+
+btnAddPro.addEventListener("click",()=>{
+    /**
+     * Borrar el contenido del main
+     * Agregar un nuevo contenido
+     * Tenemos que obtener el id del producto
+     */
+
+    console.log(listaProductos)
+    secProductos.innerHTML=" ";
+
+    let divProducto = document.createElement("div");
+    divProducto.classList.add("cardContePro");  
+
+    divProducto.innerHTML = `<label for="">
+                            ID
+                            <input type="text" value="${proximoIdProducto()}" class="disabledInput" readonly disabled>
+                            </label>`;
+                
+    let labelUrl=document.createElement("label");
+    labelUrl.classList.add("cardInfoLabel");
+    labelUrl.innerText="Url";
+    labelUrl.setAttribute("for","urlImgProducto");
+
+    let inputUrl=document.createElement("input");
+    inputUrl.setAttribute("type","url");
+    inputUrl.setAttribute("id","urlImgProducto");
+
+    inputUrl.addEventListener("change",({target:{value}})=>{
+        imgProducto.setAttribute("src",value);
+    })
+
+    let labelDesPro = document.createElement("label");
+    labelDesPro.classList.add("cardInfoLabel");
+    labelDesPro.innerText = "Descripción";
+    labelDesPro.setAttribute("for", "descripcionProducto");
+
+    let texArDesPro = document.createElement("textarea");
+    texArDesPro.setAttribute("id", "descripcionProducto");
+    texArDesPro.innerText = " ";
+
+    texArDesPro.addEventListener("keyup", (e) => {
+        texArDesPro.setAttribute("style", `height:${e.target.scrollHeight}px`)
+
+    })
+
+    let labelMarca = document.createElement("label");
+    labelMarca.classList.add("cardInfoLabel");
+    labelMarca.innerText = "Marca";
+    labelMarca.setAttribute("for", "marcaProducto")
+
+    let inputMarca = document.createElement("input");
+    inputMarca.setAttribute("type", "text");
+    inputMarca.setAttribute("list", "listaMarcas");
+    inputMarca.setAttribute("id", "marcaProducto");
+
+
+    let labelCatPro = document.createElement("label");
+    labelCatPro.classList.add("cardInfoLabel")
+    labelCatPro.innerText = "Categoría";
+    labelCatPro.setAttribute("for", "categoriaProducto");
+
+    let inputCatPro = document.createElement("input");
+    inputCatPro.setAttribute("type", "text");
+    inputCatPro.setAttribute("list", "listaCategoria");
+    inputCatPro.setAttribute("id", "categoriaProducto");
+    inputCatPro.setAttribute("value", "");
+
+    let labelPrePro = document.createElement("label");
+    labelPrePro.classList.add("cardInfoLabel");
+    labelPrePro.innerText = "Precio";
+    labelPrePro.setAttribute("for", "precioProducto");
+
+    let inputPrePro = document.createElement("input");
+    inputPrePro.setAttribute("type", "number");
+    inputPrePro.setAttribute("id", "precioProducto");
+    inputPrePro.setAttribute("value","");
+
+    inputPrePro.addEventListener("keypress", (e) => {
+        exprNum.test(e.key) || e.preventDefault();
+    })
+
+    let labelStoPro = document.createElement("label");
+    labelStoPro.classList.add("cardInfoLabel");
+    labelStoPro.innerText = "Stock";
+    labelStoPro.setAttribute("for", "stockProducto");
+
+    let inputStoPro = document.createElement("input");
+    inputStoPro.setAttribute("type", "text");
+    inputStoPro.setAttribute("id", "stockProducto");
+    inputStoPro.setAttribute("value", "");
+
+    inputStoPro.addEventListener("keypress", (e) => {
+        exprNum.test(e.key) || e.preventDefault();
+    })
+
+    let btnNuevoProd = document.createElement("button");
+    btnNuevoProd.classList.add("btnPrimario")
+    btnNuevoProd.setAttribute("id", "btnNuevoProd");
+    btnNuevoProd.innerText = "Cargar producto";
+
+    btnNuevoProd.addEventListener("click",()=>{
+       let nuevoPor=new Producto(parseInt(proximoIdProducto()),inputCatPro.value,texArDesPro.value,inputMarca.value,parseInt(inputPrePro.value),parseInt(inputStoPro.value),imgProducto.getAttribute("src"));
+
+       listaProductos.push(nuevoPor);
+
+       localStorage.setItem("Productos",JSON.stringify(listaProductos));
+       
+    })
+
+    let imgProducto=document.createElement("img");
+    imgProducto.setAttribute("src","/assets/img/imgProducto.png");
+    imgProducto.setAttribute("alt","Imagen de producto")
+    imgProducto.setAttribute("style","width:100%;")/**poner en css */
+   
+    labelUrl.append(inputUrl);
+    labelDesPro.append(texArDesPro);
+    labelMarca.append(inputMarca);
+    labelCatPro.append(inputCatPro);
+    labelPrePro.append(inputPrePro);
+    labelStoPro.append(inputStoPro);
+    divProducto.append(labelUrl,labelDesPro, labelMarca, labelCatPro, labelPrePro, labelStoPro, btnNuevoProd);
+    
+    secProductos.append(divProducto,imgProducto);
 })

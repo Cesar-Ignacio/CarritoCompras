@@ -173,6 +173,17 @@
     transition: all linear 0.2s; }
     .nav .buscardorFiltros .selector:hover {
       background-color: #f2f3fc; }
+  .nav .buscardorFiltros .nuevoProducto {
+    display: none;
+    padding: 0.1em 0.7em 0 0.7em;
+    font-size: 1rem;
+    border-radius: 100%;
+    color: #4b41b4;
+    background-color: transparent;
+    transition: all linear 0.2s;
+    border: solid #4b41b4 1px; }
+    .nav .buscardorFiltros .nuevoProducto:hover {
+      background-color: #f2f3fc; }
 
 .main {
   border: 1px #3e2f2f solid;
