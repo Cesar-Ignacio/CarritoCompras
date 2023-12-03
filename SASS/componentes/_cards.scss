@@ -1,5 +1,5 @@
 .cardContePro{
-    //border: rgb(255, 0, 179) solid 1px;
+   // border: rgb(255, 0, 179) solid 1px;
     box-shadow: 0px 0px 1rem 0rem rgb(126, 113, 126);
     border-radius: 0.2rem;
     display: flex;
@@ -24,7 +24,7 @@
 
 .cardInfo{
     width: 100%;
-    //border: rgb(60, 255, 0) solid 1px;
+   // border: rgb(60, 255, 0) solid 1px;
     display: flex;
     padding: 0.5em;
 }
@@ -50,6 +50,14 @@
         @include resetStyleForm();
     }
 }
+.cardInfoLabelV0{
+    //border: solid red 1px;
+    width: 80%;
+    margin: 0.2em 0;
+    input{
+        margin:0 0.5em ;
+    }
+}   
 
 .cardInfoFooter{
     width: 100%;

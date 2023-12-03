@@ -67,6 +67,12 @@
     .cardInfoLabel input::-webkit-scrollbar {
       width: 0px; }
 
+.cardInfoLabelV0 {
+  width: 80%;
+  margin: 0.2em 0; }
+  .cardInfoLabelV0 input {
+    margin: 0 0.5em; }
+
 .cardInfoFooter {
   width: 100%;
   display: flex;

@@ -43,8 +43,46 @@
         "precio":200,
         "stock":4,
         "url":"/assets/img/heladera.jpg"
+    },
+    {
+        "id":6,
+        "categoria":"Electrodomesticos",
+        "descripcion":"Batidora Artisan KitchenAid 4.8L - Empire Red - KSM15ER",
+        "marca":"KitchenAid", 
+        "precio":800,
+        "stock":9,
+        "url":"https://kaidarg.vtexassets.com/arquivos/ids/155634/image-70f5cf40b6c844bc9cc236e8b947d141.jpg?v=637618687193070000"
+    },
+    {
+        "id":7,
+        "categoria":"Electrodomesticos",
+        "descripcion":"Microondas Samsung ME731K.KD Blanco 20 LT 800W Sin Grill",
+        "marca":"Samsung", 
+        "precio":500,
+        "stock":5,
+        "url":"https://www.rribaceta.com.ar/8085-large_default/microondas-samsung-me731kkd-blanco-20-lt-800w-sin-grill.jpg"
+    },
+    {
+        "id":8,
+        "categoria":"Auriculares",
+        "descripcion":"Auriculares intrauditivos realmente inalámbricos",
+        "marca":"Philips", 
+        "precio":200,
+        "stock":3,
+        "url":"https://images.philips.com/is/image/PhilipsConsumer/TAT2205BK_00-IMS-es_AR?$jpglarge$&wid=960"
+    },
+    {
+        "id":9,
+        "categoria":"Auriculares",
+        "descripcion":"Auriculares PHILIPS extra bass on ear -c/ mic",
+        "marca":"Philips", 
+        "precio":100,
+        "stock":5,
+        "url":"https://macrohard.com.ar/images/products/SIHV2cR3cUrvKaFOagzS18k415BnmyYAh0In9BW0.jpeg"
     }
 
+
+    
 ]
 
 

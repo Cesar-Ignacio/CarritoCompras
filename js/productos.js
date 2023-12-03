@@ -10,6 +10,7 @@ let inputBuscar = document.querySelector("#buscarProducto");
 let selCategoria = document.querySelector("#categoriaProducto");
 let selecMarca = document.querySelector("#marcaProducto");
 let btnAddPro=document.querySelector("#btnNuevoProducto");
+
 /** MAIN */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -84,7 +85,7 @@ function renderizarProductos(productos) {
         /**
          * Si el usuario es admin se mostrará 'vistaAdmin', caso contrario ´vistaUsuario´
          */
-        (usuarioLogeado?._id === 101) ? vistaAdmin(element, secProductos, dataListMarca, dataListaCatego) : vistaUsuario(element, secProductos);
+        (usuarioLogeado?._id === 101) ? vistaAdmin(element, secProductos, dataListMarca, dataListaCatego) :(element._estado)&&(vistaUsuario(element, secProductos));
     });
 
     secProductos.append(dataListMarca);
@@ -310,13 +311,29 @@ function vistaAdmin(element, secProductos, datalistMarca, dataListaCatego) {
         exprNum.test(e.key) || e.preventDefault();
     })
 
+    let labelEstado=document.createElement("label");
+    labelEstado.classList.add("cardInfoLabelV0");
+    labelEstado.innerText="Estado";
+
+    let inputEstadoPro=document.createElement("input");
+    inputEstadoPro.setAttribute("type","checkbox");
+    (element._estado)&&(inputEstadoPro.setAttribute("checked",true))
+
+    inputEstadoPro.addEventListener("click",({target:{checked}})=>{
+        (checked)||(Swal.fire({
+            html: `El producto ahora no sera visible en el catálogo. <strong>Presione editar</strong>  para guardar los cambios`,
+            icon: "info",
+          }))
+       
+    })
+
     let btActualizar = document.createElement("button");
     btActualizar.classList.add("btnPrimario")
     btActualizar.setAttribute("id", "btnActualizar");
     btActualizar.innerText = "Editar";
 
     btActualizar.addEventListener("click", () => {
-        actualizarProducto(element, inputStoPro.value, inputPrePro.value, texArDesPro.value, inputCatPro.value);
+        actualizarProducto(element, inputStoPro.value, inputPrePro.value, texArDesPro.value, inputCatPro.value,inputEstadoPro.checked);
     });
 
     datalistMarca.appendChild(opcMarca);
@@ -326,15 +343,16 @@ function vistaAdmin(element, secProductos, datalistMarca, dataListaCatego) {
     labelCatPro.append(inputCatPro);
     labelPrePro.append(inputPrePro);
     labelStoPro.append(inputStoPro);
-    divProducto.append(labelDesPro, labelMarca, labelCatPro, labelPrePro, labelStoPro, btActualizar);
+    labelEstado.append(inputEstadoPro);
+    divProducto.append(labelDesPro, labelMarca, labelCatPro, labelPrePro, labelStoPro,labelEstado, btActualizar);
     secProductos.append(divProducto);
 
 }
 
-function actualizarProducto(element, nStock, nPrecio, nDescr, nCategoria) {
+function actualizarProducto(element, nStock, nPrecio, nDescr, nCategoria,estado) {
     listaProductos = listaProductos.map((ele) => {
         (ele._id === element._id) && (ele._stock = parseInt(nStock), ele._precio = parseInt(nPrecio),
-            ele._descripcion = nDescr, ele._categoria = nCategoria);
+            ele._descripcion = nDescr, ele._categoria = nCategoria, ele._estado=estado);
         return ele;
     });
 
@@ -379,6 +397,28 @@ function proximoIdProducto()
     return _id+1;
 }
 
+function agregarNuevoProducto(id,categoria,descripcion,marca,precio,stock,url)
+{ 
+    let nuevoPor=new Producto(id,categoria,descripcion,marca,precio,stock,url);
+      
+    listaProductos.push(nuevoPor);
+   
+    localStorage.setItem("Productos",JSON.stringify(listaProductos));
+
+    Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "El producto se agrego con exito al catalogo ",
+        showConfirmButton: false,
+        timer: 1500
+    }),
+
+    setTimeout(()=>{
+        renderizarProductos(listaProductos);
+    },1500)
+    
+}
+
 /**EVENTOS */
 aCerrarSesseion.addEventListener("click", () => {
     localStorage.removeItem("usuarioLogeado");
@@ -400,11 +440,6 @@ selecMarca.addEventListener("click", ({ target: { value } }) => {
 })
 
 btnAddPro.addEventListener("click",()=>{
-    /**
-     * Borrar el contenido del main
-     * Agregar un nuevo contenido
-     * Tenemos que obtener el id del producto
-     */
 
     console.log(listaProductos)
     secProductos.innerHTML=" ";
@@ -500,11 +535,8 @@ btnAddPro.addEventListener("click",()=>{
     btnNuevoProd.innerText = "Cargar producto";
 
     btnNuevoProd.addEventListener("click",()=>{
-       let nuevoPor=new Producto(parseInt(proximoIdProducto()),inputCatPro.value,texArDesPro.value,inputMarca.value,parseInt(inputPrePro.value),parseInt(inputStoPro.value),imgProducto.getAttribute("src"));
-
-       listaProductos.push(nuevoPor);
-
-       localStorage.setItem("Productos",JSON.stringify(listaProductos));
+       
+       agregarNuevoProducto(parseInt(proximoIdProducto()),inputCatPro.value,texArDesPro.value,inputMarca.value,parseInt(inputPrePro.value),parseInt(inputStoPro.value),imgProducto.getAttribute("src"))
        
     })
 
