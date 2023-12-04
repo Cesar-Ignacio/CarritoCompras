@@ -3,7 +3,7 @@ El proyecto es un simulador de e-commerce, cuenta con un catálogo de productos,
 Para la creación del proyecto, se ha implementado varias tecnologías, técnicas y sistemas. Entre ellas, se encuentran: JSON, para guardar y transmitir la información de los productos y usuarios; AJAX, para hacer peticiones al archivo JSON y obtener los datos sin recargar la página; LocalStorage, para guardar los productos, usuarios y el carrito, que se irán creando; SessionStorage, para guardar los datos del usuario logeado; SweetAlert2, para la creación de alertas más estéticas, para confirmar e informar.
 
 ## Funcionalidades del proyecto
-El página puede tener dos tipos de usuarios (clientes y admintrador).
+La página puede tener dos tipos de usuarios (clientes y admintradores).
 #### Admin
 - Visualizar un panel de control. El administrador tendrá acceso a un panel de control, desde donde podrá gestionar los productos de la página.
 Modificar los datos de los productos.
