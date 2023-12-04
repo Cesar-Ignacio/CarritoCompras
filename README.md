@@ -16,5 +16,13 @@ Modificar los datos de los productos.
 -  Ver y modificar el carrito de compras. Los clientes pueden ver el detalle y el total de la compra. También, modificar el carrito de compras, eliminando o cambiando la cantidad de los productos, vaciando el carrito o procediendo al pago.
 -  Cerrar sesión e iniciar sesión nuevamente. Los clientes pueden cerrar sesión en cualquier momento y volver a iniciar sesión con su correo y contraseña."
 
+## Datos de prueba
+
+| Usuario     | Contraseña |
+| --------- | -----:|
+| admin  | admin |
+| Cesar     |   123 |
+| Beto      |   147 |
+
 ## Vista de página
 ![Productos - Google Chrome 2023-12-03 21-00-49](https://github.com/Cesar-Ignacio/CarritoCompras/assets/73149891/bd02b7fe-7c20-4f80-a5e2-b0bf0af5a7a5)
