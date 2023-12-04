@@ -131,7 +131,7 @@ function cargarPerfil() {
      * mostrará la función vistaUsuarioNoLogeado()
      */
 
-    usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado")) ?? vistaUsuarioNoLogeado();
+    usuarioLogeado = JSON.parse(sessionStorage.getItem("usuarioLogeado")) ?? vistaUsuarioNoLogeado();
 
     (usuarioLogeado) && vistaUsuarioLogeado();
 
@@ -208,7 +208,7 @@ function vaciarCarrito() {
 }
 /**EVENTOS */
 aCerrarSesseion.addEventListener("click", () => {
-    localStorage.removeItem("usuarioLogeado");
+    sessionStorage.removeItem("usuarioLogeado");
     location.reload()
 })
 

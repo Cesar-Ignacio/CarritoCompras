@@ -111,7 +111,7 @@ function cargarPerfil() {
     /** Si existe un usuario logeado se mostrará la función vistaUsuarioLogeado(), caso contrario se
      * mostrará la función vistaUsuarioNoLogeado()
      */
-    usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado")) ?? vistaUsuarioNoLogeado();
+    usuarioLogeado = JSON.parse(sessionStorage.getItem("usuarioLogeado")) ?? vistaUsuarioNoLogeado();
 
     (usuarioLogeado) && vistaUsuarioLogeado();
 }
@@ -421,7 +421,7 @@ function agregarNuevoProducto(id,categoria,descripcion,marca,precio,stock,url)
 
 /**EVENTOS */
 aCerrarSesseion.addEventListener("click", () => {
-    localStorage.removeItem("usuarioLogeado");
+    sessionStorage.removeItem("usuarioLogeado");
     location.reload()
 })
 

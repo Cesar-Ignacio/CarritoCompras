@@ -27,7 +27,7 @@ btnLogin.addEventListener("click", (e) => {
     let usuario = listaUsuarios.find((usu) => usu._contrasenia === contraseniaUsuario && usu._nombreUsuario === nombreUsuario);
 
 
-    (usuario)?(localStorage.setItem("usuarioLogeado", JSON.stringify(usuario)),
+    (usuario)?(sessionStorage.setItem("usuarioLogeado", JSON.stringify(usuario)),
                 window.location.href = "../index.html"):pMensaje.innerHTML = "El usuario no existe";;
 
 
